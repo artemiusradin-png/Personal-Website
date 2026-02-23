@@ -511,6 +511,10 @@ li {
 }
 
 @media (max-width: 1099px) {
+  .stage-card .label {
+    display: none;
+  }
+
   .journey-page {
     height: 100vh;
     padding-top: 0;
@@ -531,11 +535,11 @@ li {
   .year-nav {
     position: fixed;
     top: auto;
-    bottom: calc(50vh - 2.7rem);
-    left: 0;
-    right: 0;
+    bottom: calc(50vh - 0.8rem);
+    left: 0.8rem;
+    right: 0.8rem;
     z-index: 4;
-    padding: 0 0.75rem;
+    padding: 0;
     background: transparent;
     border-bottom: none;
     backdrop-filter: none;
@@ -551,13 +555,16 @@ li {
     margin-top: 0;
     display: flex;
     flex-wrap: nowrap;
-    gap: 0.42rem;
+    gap: 1.35rem;
     overflow-x: auto;
-    padding: 0.5rem;
+    max-height: none;
+    padding: 0;
     scroll-snap-type: x mandatory;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.22);
-    backdrop-filter: blur(6px);
+    border-radius: 0;
+    background: transparent;
+    border: 0;
+    backdrop-filter: none;
+    box-shadow: none;
     scrollbar-width: none;
   }
 
@@ -570,16 +577,18 @@ li {
     scroll-snap-align: center;
     display: inline-block;
     font-size: 0.79rem;
-    line-height: 1.05;
-    letter-spacing: 0.01em;
-    padding: 0.4rem 0.56rem;
-    border: 1px solid rgba(17, 17, 17, 0.22);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.82);
-    color: #222;
+    line-height: 1.12;
+    letter-spacing: 0.015em;
+    padding: 0.04rem 0;
+    border: 0;
+    border-left: 0;
+    border-radius: 0;
+    background: transparent;
+    color: #000;
     font-weight: 600;
     text-shadow: none;
     white-space: nowrap;
+    transition: color 140ms ease, border-color 140ms ease, transform 140ms ease;
   }
 
   .year-link::before {
@@ -589,12 +598,13 @@ li {
   .year-link:hover,
   .year-link.active,
   .year-link.active.active-shift-left {
-    transform: translateY(-1px) scale(1.04);
+    transform: translateX(1px) scale(1.14);
     transform-origin: center;
-    color: #fff;
-    font-weight: 700;
-    background: #111;
-    border-color: #111;
+    transform-origin: center;
+    color: #000;
+    font-weight: 800;
+    border-left-color: transparent;
+    text-decoration: none;
   }
 
   .map-background {

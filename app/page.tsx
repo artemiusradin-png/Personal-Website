@@ -302,29 +302,19 @@ export default function Home() {
     if (!hasEnteredJourney) return;
     if (!window.matchMedia("(max-width: 1099px)").matches) return;
 
-    const activeLink = document.querySelector<HTMLElement>(".year-nav .year-link.active");
-    if (!activeLink) return;
+    const id = window.requestAnimationFrame(() => {
+      const activeLink = document.querySelector<HTMLElement>(".year-nav .year-link.active");
+      if (!activeLink) return;
 
-    activeLink.scrollIntoView({
-      behavior: "smooth",
-      inline: "center",
-      block: "nearest",
+      activeLink.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
     });
+
+    return () => window.cancelAnimationFrame(id);
   }, [activeStageId, hasEnteredJourney]);
-
-  useEffect(() => {
-    if (!hasEnteredJourney) return;
-    if (!window.matchMedia("(max-width: 1099px)").matches) return;
-
-    const activeLink = document.querySelector<HTMLElement>(".year-nav .year-link.active");
-    if (!activeLink) return;
-
-    activeLink.scrollIntoView({
-      behavior: "smooth",
-      inline: "center",
-      block: "nearest",
-    });
-  }, [hasEnteredJourney]);
 
   const activeStage = useMemo(
     () => stages.find((stage) => stage.id === activeStageId) ?? stages[0],
