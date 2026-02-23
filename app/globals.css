@@ -1,0 +1,682 @@
+:root {
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --ink: #13161a;
+  --muted: #5f6670;
+  --line: #d8dee6;
+  --accent: #133f6c;
+  --accent-soft: #edf3fb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sora), sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+.landing-hero {
+  position: relative;
+  z-index: 5;
+  min-height: 100vh;
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+  gap: 0.85rem;
+  background:
+    linear-gradient(180deg, rgba(10, 20, 30, 0.55) 0%, rgba(10, 20, 30, 0.4) 100%),
+    url("/landing-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transform: translateY(16px) scale(0.992);
+  transition: opacity 360ms ease, transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.landing-hero.ready {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.landing-hero.leaving {
+  opacity: 0;
+  transform: translateY(-34px) scale(0.985);
+  pointer-events: none;
+}
+
+.landing-kicker {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #f4f8fc;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.landing-hero h1 {
+  font-size: clamp(2.25rem, 5.2vw, 4.8rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  text-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+  margin: 0;
+  max-width: 14ch;
+}
+
+.landing-hero p {
+  margin: 0;
+  max-width: 56ch;
+  font-size: clamp(0.98rem, 1.35vw, 1.18rem);
+  line-height: 1.7;
+  color: #eef4fb;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.landing-swipe-hint {
+  margin-top: 1rem;
+  display: grid;
+  justify-items: center;
+  gap: 0.55rem;
+  color: #ffffff;
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+}
+
+.swipe-chevrons {
+  width: 44px;
+  height: 54px;
+  position: relative;
+  display: grid;
+  justify-items: center;
+}
+
+.swipe-chevrons i {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-right: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+  transform: rotate(45deg);
+  opacity: 0;
+  animation: chevronDown 1.2s ease-in-out infinite;
+}
+
+.swipe-chevrons i:nth-child(1) {
+  top: 0;
+  animation-delay: 0s;
+}
+
+.swipe-chevrons i:nth-child(2) {
+  top: 12px;
+  animation-delay: 0.16s;
+}
+
+.swipe-chevrons i:nth-child(3) {
+  top: 24px;
+  animation-delay: 0.32s;
+}
+
+@keyframes chevronDown {
+  0% {
+    transform: rotate(45deg) translate(-6px, -6px);
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(45deg) translate(6px, 6px);
+    opacity: 0;
+  }
+}
+
+.journey-page {
+  position: relative;
+  min-height: 100vh;
+  opacity: 1;
+}
+
+.journey-page.is-hidden-before-entry {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.journey-page.entered-from-landing {
+  animation: journeyEnter 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes journeyEnter {
+  0% {
+    opacity: 0.15;
+    transform: translateY(26px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.map-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.map-background::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: min(24vh, 220px);
+  background: linear-gradient(
+    180deg,
+    rgba(245, 247, 250, 0) 0%,
+    rgba(245, 247, 250, 0.42) 58%,
+    rgba(245, 247, 250, 0.9) 100%
+  );
+}
+
+.map-background .visual-map {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 140vmax;
+  height: 140vmax;
+  min-width: 140vmax;
+  min-height: 140vmax;
+  transform: translate(-50%, -50%);
+}
+
+.map-background .world-svg,
+.map-background .rsm-svg {
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.map-background-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(251, 252, 253, 0.5) 0%,
+    rgba(245, 247, 250, 0.45) 50%,
+    rgba(245, 247, 250, 0.55) 100%
+  );
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+p,
+li {
+  line-height: 1.75;
+  font-size: 1.02rem;
+}
+
+.journey-shell {
+  position: relative;
+  z-index: 2;
+  width: min(97vw, 1750px);
+  margin: 0 auto;
+  padding: clamp(1rem, 1.8vw, 1.8rem);
+  display: grid;
+  gap: clamp(0.9rem, 1.2vw, 1.4rem);
+}
+
+.year-nav {
+  position: sticky;
+  top: 1.1rem;
+  align-self: start;
+}
+
+.label {
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.year-nav h1 {
+  margin-top: 0.45rem;
+  font-size: 1.9rem;
+  line-height: 1.2;
+}
+
+.subtext {
+  margin-top: 0.8rem;
+  color: var(--muted);
+  font-size: 0.96rem;
+  max-width: 32ch;
+}
+
+.year-nav nav {
+  margin-top: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.7rem;
+}
+
+.year-link {
+  text-decoration: none;
+  color: #666;
+  font-size: 0.98rem;
+  padding: 0.1rem 0;
+  transition: color 140ms ease, transform 140ms ease;
+}
+
+.year-link:hover,
+.year-link.active {
+  color: #000;
+  transform: translateX(2px);
+  font-weight: 600;
+}
+
+.year-link.active.active-shift-left {
+  transform: translateX(-2px);
+}
+
+.map-panel {
+  position: sticky;
+  top: 1.1rem;
+  align-self: start;
+}
+
+.map-wrap {
+  height: clamp(360px, 54vh, 620px);
+  overflow: hidden;
+  position: relative;
+}
+
+.visual-map {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  background: transparent;
+}
+
+.world-svg,
+.world-svg.rsm-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ocean {
+  fill: rgba(245, 245, 245, 0.9);
+}
+
+.graticule line {
+  stroke: rgba(0, 0, 0, 0.12);
+  stroke-width: 1;
+}
+
+.landmass path {
+  fill: rgba(120, 120, 120, 0.5);
+  stroke: rgba(0, 0, 0, 0.35);
+  stroke-width: 1.1;
+}
+
+.route-line {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.85);
+  stroke-width: 1.9;
+  stroke-linecap: butt;
+  stroke-dasharray: 7 5;
+  vector-effect: non-scaling-stroke;
+}
+
+.map-title {
+  position: absolute;
+  left: 0.65rem;
+  top: 0.6rem;
+  z-index: 3;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #ccc;
+  padding: 0.26rem 0.4rem;
+}
+
+.route-dot {
+  transition: transform 220ms ease, fill 220ms ease, opacity 220ms ease;
+}
+
+.route-dot.active {
+  transform: scale(1.25);
+}
+
+.focus-marker {
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pulse {
+  animation: pulse 1.9s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  transform-origin: center center;
+  transform-box: fill-box;
+  vector-effect: non-scaling-stroke;
+  will-change: transform, opacity;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.62;
+  }
+  70% {
+    transform: scale(1.85);
+    opacity: 0.18;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.focus-label {
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.focus-label text {
+  font-family: inherit;
+}
+
+.map-caption {
+  margin-top: 0.6rem;
+  padding: 0.5rem 0;
+}
+
+.map-caption .label {
+  color: #555;
+}
+
+.map-caption h2 {
+  margin-top: 0.2rem;
+  font-size: 1.2rem;
+  line-height: 1.35;
+  color: #000;
+}
+
+.map-caption p {
+  margin-top: 0.25rem;
+  color: #555;
+}
+
+.timeline-panel {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.stage-card {
+  position: relative;
+  background: #fafafa;
+  padding: 1.5rem 1.5rem;
+  scroll-margin-top: 1.2rem;
+  border: none;
+  border-top: 1px solid #ddd;
+  transition: background 180ms ease;
+}
+
+.stage-card:first-child {
+  border-top: none;
+}
+
+.stage-card:hover {
+  background: #f5f5f5;
+}
+
+.stage-card .label {
+  display: block;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #888;
+  margin-bottom: 0.4rem;
+}
+
+.stage-card h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #000;
+}
+
+.stage-card .location {
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.stage-card p:not(.label):not(.location) {
+  margin-top: 0.65rem;
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: #333;
+}
+
+.stage-card ul {
+  list-style: none;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.22rem;
+}
+
+.stage-card li {
+  position: relative;
+  padding-left: 1.1rem;
+  font-size: 0.9rem;
+  color: #444;
+  line-height: 1.5;
+}
+
+.stage-card li::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+  color: #000;
+  font-size: 1.1em;
+}
+
+@media (max-width: 1099px) {
+  .journey-page {
+    height: 100vh;
+    padding-top: 0;
+    overflow: hidden;
+  }
+
+  .journey-shell {
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    display: block;
+  }
+
+  .map-panel {
+    display: none;
+  }
+
+  .year-nav {
+    position: fixed;
+    top: auto;
+    bottom: calc(50vh - 2.7rem);
+    left: 0;
+    right: 0;
+    z-index: 4;
+    padding: 0 0.75rem;
+    background: transparent;
+    border-bottom: none;
+    backdrop-filter: none;
+  }
+
+  .year-nav .label,
+  .year-nav h1,
+  .year-nav .subtext {
+    display: none;
+  }
+
+  .year-nav nav {
+    margin-top: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.42rem;
+    overflow-x: auto;
+    padding: 0.5rem;
+    scroll-snap-type: x mandatory;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(6px);
+    scrollbar-width: none;
+  }
+
+  .year-nav nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .year-link {
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+    display: inline-block;
+    font-size: 0.79rem;
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    padding: 0.4rem 0.56rem;
+    border: 1px solid rgba(17, 17, 17, 0.22);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.82);
+    color: #222;
+    font-weight: 600;
+    text-shadow: none;
+    white-space: nowrap;
+  }
+
+  .year-link::before {
+    content: none;
+  }
+
+  .year-link:hover,
+  .year-link.active,
+  .year-link.active.active-shift-left {
+    transform: translateY(-1px) scale(1.04);
+    transform-origin: center;
+    color: #fff;
+    font-weight: 700;
+    background: #111;
+    border-color: #111;
+  }
+
+  .map-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    height: 50vh;
+  }
+
+  .map-background .visual-map {
+    top: 50%;
+    width: 165vmax;
+    height: 165vmax;
+    min-width: 165vmax;
+    min-height: 165vmax;
+    transform: translate(-50%, -50%);
+    opacity: 0.95;
+  }
+
+  .map-background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    height: 50vh;
+    background: linear-gradient(
+      180deg,
+      rgba(245, 247, 250, 0.05) 0%,
+      rgba(245, 247, 250, 0.22) 58%,
+      rgba(245, 247, 250, 0.55) 100%
+    );
+  }
+
+  .timeline-panel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 50vh;
+    bottom: 0;
+    margin: 0;
+    padding: 0.5rem 0.7rem 1rem;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+  }
+
+  .timeline-panel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .stage-card {
+    background: rgba(255, 255, 255, 0.56);
+    border-color: rgba(17, 17, 17, 0.72);
+    backdrop-filter: blur(2px);
+    min-height: calc(50vh - 1rem);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    margin: 0;
+  }
+
+  .stage-card:hover {
+    background: rgba(255, 255, 255, 0.64);
+  }
+}
+
+@media (min-width: 1100px) {
+  .map-background .visual-map {
+    transform: translate(-58%, -50%);
+  }
+
+  .journey-shell {
+    grid-template-columns: clamp(180px, 16vw, 250px) minmax(360px, 40vw) minmax(420px, 1fr);
+    align-items: start;
+  }
+
+  .year-nav nav {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.42rem;
+  }
+}

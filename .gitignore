@@ -1,0 +1,20 @@
+node_modules/
+.next/
+.DS_Store
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local env
+.env
+.env.local
+.env.*.local
+
+# Optional large local docs/assets not required for app source
+Artem_Radin_Curriculum_Vitae copy.pdf
+My path to becoming I.pdf
+IMG_1149.jpg
+Screenshot 2026-02-23 at 9.04.21 PM.png
