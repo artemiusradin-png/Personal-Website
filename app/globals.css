@@ -82,38 +82,50 @@ body {
 }
 
 @media (max-width: 1099px) {
+  .landing-hero {
+    min-height: 100svh;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 1.2rem);
+    padding-right: 1rem;
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.8rem);
+    padding-left: 1rem;
+    grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+    align-content: stretch;
+    gap: 0.55rem;
+  }
+
   .landing-hero > .landing-kicker,
   .landing-hero > h1 {
-    transform: translateY(-3.2rem);
+    transform: none;
   }
 
   .landing-hero > p:not(.landing-kicker),
   .landing-hero > .landing-swipe-hint {
     transform: none;
+    position: static;
+    left: auto;
+    bottom: auto;
   }
 
   .landing-hero > p:not(.landing-kicker) {
-    position: absolute;
-    left: 50%;
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 4.7rem);
-    width: min(90vw, 33ch);
-    transform: translateX(-50%);
+    width: min(92vw, 34ch);
     line-height: 1.4;
+    align-self: end;
+    margin-top: 0;
   }
 
   .landing-hero > .landing-swipe-hint {
-    position: absolute;
-    left: 50%;
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 0.9rem);
-    transform: translateX(-50%);
+    align-self: end;
+    margin-top: 0;
     margin: 0;
   }
 
   .about-hero {
-    align-content: start;
+    min-height: 100svh;
+    align-content: stretch;
     justify-items: start;
     text-align: left;
     gap: 0.95rem;
+    grid-template-rows: minmax(0, 1fr) auto;
     padding: calc(env(safe-area-inset-top, 0px) + 3.6rem) 1rem
       calc(env(safe-area-inset-bottom, 0px) + 1rem);
   }
@@ -325,6 +337,10 @@ body {
 }
 
 @media (max-width: 1099px) {
+  .about-menu-layout {
+    width: min(100%, 34rem);
+  }
+
   .about-topic-item {
     font-size: clamp(1.3rem, 6.8vw, 1.85rem);
     margin-top: 0.7rem;
@@ -361,14 +377,17 @@ body {
   }
 
   .about-swipe-hint {
+    position: static;
+    transform: none;
     justify-self: center;
+    align-self: end;
     justify-items: center;
-    color: rgba(255, 255, 255, 0.95);
+    color: #4e5761;
   }
 
   .about-swipe-hint .swipe-chevrons i {
-    border-right-color: rgba(255, 255, 255, 0.9);
-    border-bottom-color: rgba(255, 255, 255, 0.9);
+    border-right-color: #4e5761;
+    border-bottom-color: #4e5761;
   }
 }
 
