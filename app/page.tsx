@@ -214,22 +214,6 @@ const stages: JourneyStage[] = [
 ];
 
 type PageFlow = "landing" | "about" | "journey";
-type MobileStory = {
-  id: string;
-  category: string;
-  title: string;
-  excerpt: string;
-  imageUrl: string;
-};
-
-const mobileTopics = [
-  "ALL",
-  "ANIMALS",
-  "ENVIRONMENT",
-  "HISTORY & CULTURE",
-  "SCIENCE",
-  "TRAVEL",
-] as const;
 
 export default function Home() {
   const basePath = process.env.NODE_ENV === "production" ? "/Personal-Website" : "";
@@ -251,25 +235,11 @@ export default function Home() {
   const [isLandingReady, setIsLandingReady] = useState(false);
   const [isAboutReady, setIsAboutReady] = useState(false);
   const [isEntryLockActive, setIsEntryLockActive] = useState(false);
-  const [isMobileViewport, setIsMobileViewport] = useState<boolean | null>(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
-  const [mobileSearchQuery, setMobileSearchQuery] = useState("");
-  const [mobileActiveTopic, setMobileActiveTopic] =
-    useState<(typeof mobileTopics)[number]>("ALL");
   const journeyStartRef = useRef<HTMLDivElement | null>(null);
   const jumpLockRef = useRef(false);
   const touchStartYRef = useRef<number | null>(null);
 
   const hasEnteredJourney = pageFlow === "journey";
-
-  useEffect(() => {
-    const query = window.matchMedia("(max-width: 1099px)");
-    const update = () => setIsMobileViewport(query.matches);
-    update();
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
-  }, []);
 
   useEffect(() => {
     const id = window.requestAnimationFrame(() => setIsLandingReady(true));
@@ -291,7 +261,6 @@ export default function Home() {
   }, [pageFlow]);
 
   useEffect(() => {
-    if (isMobileViewport) return;
     const previousOverflow = document.body.style.overflow;
     if (pageFlow !== "journey" || isEntryLockActive) {
       document.body.style.overflow = "hidden";
@@ -302,19 +271,9 @@ export default function Home() {
     return () => {
       document.body.style.overflow = previousOverflow;
     };
-  }, [isMobileViewport, pageFlow, isEntryLockActive]);
+  }, [pageFlow, isEntryLockActive]);
 
   useEffect(() => {
-    if (!isMobileViewport) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [isMobileViewport, mobileMenuOpen]);
-
-  useEffect(() => {
-    if (isMobileViewport) return;
     if (!hasEnteredJourney) return;
 
     const cards = Array.from(document.querySelectorAll<HTMLElement>(".stage-card"));
@@ -369,10 +328,9 @@ export default function Home() {
       window.removeEventListener("resize", requestUpdate);
       if (rafId) window.cancelAnimationFrame(rafId);
     };
-  }, [hasEnteredJourney, isMobileViewport]);
+  }, [hasEnteredJourney]);
 
   useEffect(() => {
-    if (isMobileViewport) return;
     if (!hasEnteredJourney) return;
     if (!window.matchMedia("(max-width: 1099px)").matches) return;
 
@@ -388,40 +346,12 @@ export default function Home() {
     });
 
     return () => window.cancelAnimationFrame(id);
-  }, [activeStageId, hasEnteredJourney, isMobileViewport]);
+  }, [activeStageId, hasEnteredJourney]);
 
   const activeStage = useMemo(
     () => stages.find((stage) => stage.id === activeStageId) ?? stages[0],
     [activeStageId],
   );
-  const mobileStories = useMemo<MobileStory[]>(() => {
-    const categories = mobileTopics.slice(1);
-    const images = [landingBackgroundUrl, aboutDesktopImageUrl, aboutMobileImageUrl];
-    return stages
-      .filter((stage) => stage.id !== "whats-next")
-      .map((stage, index) => ({
-        id: stage.id,
-        category: categories[index % categories.length],
-        title: `${stage.year}: ${stage.title}`,
-        excerpt: `${stage.city}, ${stage.country}. ${stage.summary}`,
-        imageUrl: images[index % images.length],
-      }));
-  }, [aboutDesktopImageUrl, aboutMobileImageUrl, landingBackgroundUrl]);
-  const filteredStories = useMemo(() => {
-    const loweredSearch = mobileSearchQuery.trim().toLowerCase();
-    return mobileStories.filter((story) => {
-      const topicMatch =
-        mobileActiveTopic === "ALL" || story.category === mobileActiveTopic;
-      const searchMatch =
-        !loweredSearch ||
-        story.title.toLowerCase().includes(loweredSearch) ||
-        story.excerpt.toLowerCase().includes(loweredSearch) ||
-        story.category.toLowerCase().includes(loweredSearch);
-      return topicMatch && searchMatch;
-    });
-  }, [mobileActiveTopic, mobileSearchQuery, mobileStories]);
-  const featuredStory = filteredStories[0] ?? mobileStories[0];
-  const regularStories = filteredStories.slice(1);
 
   const jumpToAbout = () => {
     if (jumpLockRef.current || pageFlow !== "landing" || isLeavingLanding) return;
@@ -459,154 +389,6 @@ export default function Home() {
       setIsEntryLockActive(false);
     }, 900);
   };
-
-  if (isMobileViewport === null) {
-    return <div className="mobile-boot" />;
-  }
-
-  if (isMobileViewport) {
-    return (
-      <div className="mobile-news-app">
-        <header className="mobile-news-header">
-          <div className="mobile-brand-mark" aria-label="Brand">
-            AR
-          </div>
-          <div className="mobile-header-actions">
-            <button type="button" className="mobile-login-btn">
-              LOGIN
-            </button>
-            <button type="button" className="mobile-subscribe-btn">
-              SUBSCRIBE
-            </button>
-          </div>
-          <button
-            type="button"
-            className="mobile-menu-btn"
-            aria-label="Open menu"
-            onClick={() => setMobileMenuOpen(true)}
-          >
-            <span />
-            <span />
-            <span />
-          </button>
-        </header>
-
-        <section className="mobile-hero-block">
-          <h1>
-            <span>LATEST</span>
-            <span>STORIES</span>
-          </h1>
-          <p>Subscribe to unlock premium coverage, analysis, and global updates.</p>
-          <div className="mobile-hero-accent" aria-hidden="true" />
-        </section>
-
-        <main className="mobile-feed">
-          {featuredStory && (
-            <article className="mobile-featured-card" role="button" tabIndex={0}>
-              <img src={featuredStory.imageUrl} alt={featuredStory.title} loading="eager" />
-              <div className="mobile-featured-overlay">
-                <p>{featuredStory.category}</p>
-                <h2>{featuredStory.title}</h2>
-                <span>▸ READ</span>
-              </div>
-            </article>
-          )}
-
-          {regularStories.map((story) => (
-            <article key={story.id} className="mobile-story-card">
-              <img src={story.imageUrl} alt={story.title} loading="lazy" />
-              <div className="mobile-story-copy">
-                <span className="mobile-story-tag">{story.category}</span>
-                <h3>{story.title}</h3>
-                <p>{story.excerpt}</p>
-              </div>
-            </article>
-          ))}
-        </main>
-
-        {mobileMenuOpen && (
-          <aside className="mobile-menu-overlay" role="dialog" aria-modal="true">
-            <div className="mobile-menu-top">
-              <p>Subscribe</p>
-              <div className="mobile-menu-icons">
-                <button
-                  type="button"
-                  aria-label="Search"
-                  onClick={() => setMobileSearchOpen((current) => !current)}
-                >
-                  ⌕
-                </button>
-                <button
-                  type="button"
-                  aria-label="Close menu"
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    setMobileSearchOpen(false);
-                  }}
-                >
-                  ✕
-                </button>
-              </div>
-            </div>
-
-            {mobileSearchOpen && (
-              <div className="mobile-search-wrap">
-                <input
-                  type="search"
-                  placeholder="Search stories..."
-                  value={mobileSearchQuery}
-                  onChange={(event) => setMobileSearchQuery(event.target.value)}
-                />
-              </div>
-            )}
-
-            <div className="mobile-menu-content">
-              <button
-                type="button"
-                className="mobile-menu-link"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Newsletters
-              </button>
-
-              <div className="mobile-menu-section">
-                <p className="mobile-menu-label">
-                  TOPICS <span />
-                </p>
-                {mobileTopics
-                  .filter((topic) => topic !== "ALL")
-                  .map((topic) => (
-                    <button
-                      type="button"
-                      key={topic}
-                      className={`mobile-topic-link ${mobileActiveTopic === topic ? "active" : ""}`}
-                      onClick={() => {
-                        setMobileActiveTopic(topic);
-                        setMobileMenuOpen(false);
-                      }}
-                    >
-                      {topic}
-                    </button>
-                  ))}
-              </div>
-
-              <div className="mobile-menu-section">
-                <p className="mobile-menu-label">
-                  SITES <span />
-                </p>
-                <button type="button" className="mobile-site-link">WATCH TV!</button>
-                <button type="button" className="mobile-site-link">READ THE MAGAZINE</button>
-                <button type="button" className="mobile-site-link">VISIT NAT GEO FAMILY</button>
-                <button type="button" className="mobile-site-link">BOOK A TRIP</button>
-                <button type="button" className="mobile-site-link">INSPIRE YOUR KIDS</button>
-                <button type="button" className="mobile-site-link">LISTEN TO PODCASTS</button>
-              </div>
-            </div>
-          </aside>
-        )}
-      </div>
-    );
-  }
 
   return (
     <div>
