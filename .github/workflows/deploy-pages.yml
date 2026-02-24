@@ -27,10 +27,14 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies
-        run: npm ci --omit=optional
+        run: |
+          node -v && npm -v
+          npm install
 
       - name: Build static export
-        run: npm run build
+        run: |
+          npm run build
+          echo "Build output:" && ls -la out/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
