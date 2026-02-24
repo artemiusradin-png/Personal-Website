@@ -106,7 +106,7 @@ body {
 
 .landing-feature-card img {
   width: 100%;
-  height: clamp(300px, 52vh, 620px);
+  height: clamp(380px, 66vh, 780px);
   object-fit: cover;
   display: block;
 }
@@ -115,10 +115,10 @@ body {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 1.1rem;
   padding: 1rem 0.9rem 0.92rem;
   text-align: left;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.74) 68%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.64) 68%);
   color: #fff;
 }
 

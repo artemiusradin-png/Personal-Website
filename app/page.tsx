@@ -416,8 +416,8 @@ export default function Home() {
         >
           <div className="landing-news-shell">
             <h1 className="landing-news-title">
+              <span>MY</span>
               <span>JOURNEY</span>
-              <span>STORIES</span>
             </h1>
             <p className="landing-news-copy">
               <span>Scroll</span> to explore my path across finance, policy, and global markets.
