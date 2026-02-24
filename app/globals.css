@@ -582,6 +582,10 @@ li {
 }
 
 @media (max-width: 1099px) {
+  .journey-page {
+    --mobile-map-split: 44vh;
+  }
+
   .stage-card .label {
     display: none;
   }
@@ -605,7 +609,7 @@ li {
 
   .year-nav {
     position: fixed;
-    top: calc(50vh - 1rem);
+    top: calc(var(--mobile-map-split) - 1rem);
     left: 0.65rem;
     right: 0.65rem;
     z-index: 4;
@@ -682,7 +686,7 @@ li {
     left: 0;
     right: 0;
     bottom: auto;
-    height: 50vh;
+    height: var(--mobile-map-split);
   }
 
   .map-background .visual-map {
@@ -701,7 +705,7 @@ li {
     left: 0;
     right: 0;
     bottom: auto;
-    height: 50vh;
+    height: var(--mobile-map-split);
     background: linear-gradient(
       180deg,
       rgba(245, 247, 250, 0.05) 0%,
@@ -714,10 +718,10 @@ li {
     position: fixed;
     left: 0;
     right: 0;
-    top: 50vh;
+    top: var(--mobile-map-split);
     bottom: 0;
     margin: 0;
-    padding: 2rem 0.65rem 0.65rem;
+    padding: 1.9rem 0.65rem 0.65rem;
     overflow-y: auto;
     overscroll-behavior-y: contain;
     scroll-snap-type: y mandatory;
@@ -733,7 +737,7 @@ li {
     background: rgba(255, 255, 255, 0.96);
     border-color: rgba(17, 17, 17, 0.72);
     backdrop-filter: blur(1px);
-    min-height: calc(50vh - 2.8rem);
+    min-height: calc(100vh - var(--mobile-map-split) - 2.55rem);
     height: auto;
     overflow: visible;
     scroll-snap-align: start;
