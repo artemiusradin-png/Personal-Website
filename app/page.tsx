@@ -227,6 +227,7 @@ export default function Home() {
   const [isAboutReady, setIsAboutReady] = useState(false);
   const [isEntryLockActive, setIsEntryLockActive] = useState(false);
   const [isTimelineAtEnd, setIsTimelineAtEnd] = useState(false);
+  const [isMobileCredentialsOpen, setIsMobileCredentialsOpen] = useState(false);
   const journeyStartRef = useRef<HTMLDivElement | null>(null);
   const jumpLockRef = useRef(false);
   const touchStartYRef = useRef<number | null>(null);
@@ -378,6 +379,22 @@ export default function Home() {
       if (rafId) window.cancelAnimationFrame(rafId);
     };
   }, [pageFlow]);
+
+  useEffect(() => {
+    if (pageFlow !== "journey") {
+      setIsMobileCredentialsOpen(false);
+      return;
+    }
+
+    if (!window.matchMedia("(max-width: 1099px)").matches) {
+      setIsMobileCredentialsOpen(false);
+      return;
+    }
+
+    if (activeStage.id === "whats-next" && isTimelineAtEnd) {
+      setIsMobileCredentialsOpen(true);
+    }
+  }, [pageFlow, activeStage.id, isTimelineAtEnd]);
 
   useEffect(() => {
     if (!hasEnteredJourney) return;
@@ -623,9 +640,7 @@ export default function Home() {
       </div>
       <section
         className={`credentials-screen mobile-credentials-screen ${
-          pageFlow === "journey" && activeStage.id === "whats-next" && isTimelineAtEnd
-            ? "visible"
-            : ""
+          isMobileCredentialsOpen ? "visible" : ""
         }`}
         aria-label="Connect and credentials"
       >

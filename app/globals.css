@@ -400,6 +400,12 @@ body {
     border-right-color: #000;
     border-bottom-color: #000;
   }
+
+  .about-hero.ready .about-swipe-hint {
+    animation: none;
+    opacity: 1;
+    transform: translateX(-50%);
+  }
 }
 
 .landing-kicker {
@@ -465,11 +471,13 @@ body {
 
 .landing-swipe-hint.about-swipe-hint {
   color: #000;
+  text-shadow: none;
 }
 
 .landing-swipe-hint.about-swipe-hint .swipe-chevrons i {
   border-right-color: #000;
   border-bottom-color: #000;
+  box-shadow: none;
 }
 
 .swipe-chevrons {
@@ -979,6 +987,8 @@ li {
 .credentials-screen.visible {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
+  touch-action: none;
 }
 
 .credentials-kicker {
