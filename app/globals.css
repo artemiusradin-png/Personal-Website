@@ -211,21 +211,6 @@ body {
   }
 }
 
-@keyframes mobileScrollHintDown {
-  0% {
-    transform: translateY(-3px) rotate(45deg);
-    opacity: 0.22;
-  }
-  50% {
-    transform: translateY(2px) rotate(45deg);
-    opacity: 0.72;
-  }
-  100% {
-    transform: translateY(6px) rotate(45deg);
-    opacity: 0.15;
-  }
-}
-
 .journey-page {
   position: relative;
   min-height: 100vh;
@@ -344,6 +329,10 @@ li {
   color: #111;
   text-shadow: 0 1px 4px rgba(255, 255, 255, 0.35);
   pointer-events: none;
+}
+
+.mobile-stage-status {
+  display: none;
 }
 
 .year-nav {
@@ -645,6 +634,40 @@ li {
     backdrop-filter: none;
   }
 
+  .mobile-stage-status {
+    display: block;
+    position: fixed;
+    top: 0.7rem;
+    left: 0.7rem;
+    z-index: 6;
+    max-width: min(74vw, 280px);
+    padding: 0.46rem 0.56rem;
+    border: 1px solid rgba(0, 0, 0, 0.28);
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(4px);
+    pointer-events: none;
+  }
+
+  .mobile-stage-status .label {
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    color: #444;
+  }
+
+  .mobile-stage-status h2 {
+    margin-top: 0.14rem;
+    font-size: 0.74rem;
+    line-height: 1.25;
+    color: #111;
+  }
+
+  .mobile-stage-status p {
+    margin-top: 0.14rem;
+    font-size: 0.66rem;
+    line-height: 1.3;
+    color: #222;
+  }
+
   .year-nav .label,
   .year-nav h1,
   .year-nav .subtext {
@@ -757,17 +780,17 @@ li {
 
   .timeline-panel::before {
     content: "";
-    position: fixed;
-    right: 0.95rem;
-    top: calc(var(--mobile-map-split) + 0.65rem);
+    position: absolute;
+    left: 50%;
+    top: 0.58rem;
     width: 8px;
     height: 8px;
     border-right: 1.8px solid rgba(0, 0, 0, 0.82);
     border-bottom: 1.8px solid rgba(0, 0, 0, 0.82);
-    transform: rotate(45deg);
+    transform: translateX(-50%) rotate(45deg);
+    opacity: 0.72;
     pointer-events: none;
     z-index: 5;
-    animation: mobileScrollHintDown 1.15s ease-in-out infinite;
   }
 
   .timeline-panel::-webkit-scrollbar {

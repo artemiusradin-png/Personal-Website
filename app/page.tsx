@@ -485,6 +485,13 @@ export default function Home() {
         <div className="map-background-overlay" aria-hidden="true" />
         <div className="journey-shell">
           <p className="corner-name">Artemis Radin</p>
+          <div className="mobile-stage-status" aria-live="polite">
+            <p className="label">Active Stage</p>
+            <h2>
+              {activeStage.year}: {activeStage.city}, {activeStage.country}
+            </h2>
+            <p>{activeStage.title}</p>
+          </div>
           <aside className="year-nav">
             <p className="label">Artemis Radin</p>
             <h1>Professional Journey</h1>
