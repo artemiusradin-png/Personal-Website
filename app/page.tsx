@@ -320,10 +320,6 @@ export default function Home() {
     () => stages.find((stage) => stage.id === activeStageId) ?? stages[0],
     [activeStageId],
   );
-  const shouldUseArtemName =
-    activeStage.id === "2016-kyiv" || activeStage.id === "2022-kyiv-war";
-  const displayName = shouldUseArtemName ? "Artem Radin" : "Artemis Radin";
-
   const jumpToJourney = () => {
     if (jumpLockRef.current || hasEnteredJourney || isLeavingLanding) return;
     jumpLockRef.current = true;
@@ -390,8 +386,9 @@ export default function Home() {
         </div>
         <div className="map-background-overlay" aria-hidden="true" />
         <div className="journey-shell">
+          <p className="corner-name">Artemis Radin</p>
           <aside className="year-nav">
-            <p className="label">{displayName}</p>
+            <p className="label">Artemis Radin</p>
             <h1>Professional Journey</h1>
             <p className="subtext">Year-by-year path across countries, finance, and policy.</p>
             <nav>
