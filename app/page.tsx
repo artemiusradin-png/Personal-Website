@@ -217,7 +217,7 @@ type PageFlow = "landing" | "about" | "journey";
 
 export default function Home() {
   const basePath = process.env.NODE_ENV === "production" ? "/Personal-Website" : "";
-  const landingBackgroundUrl = `${basePath}/landing-bg.png`;
+  const landingBackgroundUrl = `${basePath}/landing-bg.jpg`;
   const aboutDesktopImageUrl = `${basePath}/about-desktop.jpg`;
   const aboutMobileImageUrl = `${basePath}/about-mobile.jpg`;
   const aboutHeroStyle = useMemo(
@@ -456,15 +456,23 @@ export default function Home() {
             }
           }}
         >
-          <p className="landing-kicker">Who I Am</p>
-          <h1>Artemis Radin</h1>
-          <p className="about-intro">
-            I am a finance and economics student at UBC Sauder, currently on exchange at CUHK in Hong Kong. Born in Kyiv, Ukraine, I relocated to Germany during the war and have since built a path across corporate banking, policy, and research.
-          </p>
-          <p className="about-detail">
-            I work at the intersection of finance, policy, and global markets—with experience at BNP Paribas, the German Bundestag, and think tanks in Ukraine. I speak Ukrainian, English, and German, and I am conducting research on redistribution and economic growth across Canada and China.
-          </p>
-          <div className="landing-swipe-hint" aria-hidden="true">
+          <div className="about-panel">
+            <p className="landing-kicker about-kicker">Who I Am</p>
+            <h1>Artemis Radin</h1>
+            <p className="about-intro">
+              I am a finance and economics student at UBC Sauder, currently on exchange at CUHK in Hong Kong. Born in Kyiv, Ukraine, I relocated to Germany during the war and have since built a path across corporate banking, policy, and research.
+            </p>
+            <p className="about-detail">
+              I work at the intersection of finance, policy, and global markets, with experience at BNP Paribas, the German Bundestag, and think tanks in Ukraine. I speak Ukrainian, English, and German, and I am conducting research on redistribution and economic growth across Canada and China.
+            </p>
+            <div className="about-tags" aria-label="Focus areas">
+              <span>Finance</span>
+              <span>Policy</span>
+              <span>Research</span>
+              <span>Global Markets</span>
+            </div>
+          </div>
+          <div className="landing-swipe-hint about-swipe-hint" aria-hidden="true">
             <span>Scroll Down</span>
             <div className="swipe-chevrons">
               <i />
