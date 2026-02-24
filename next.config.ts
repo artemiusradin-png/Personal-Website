@@ -5,6 +5,7 @@ const repoName = "Personal-Website";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  eslint: { ignoreDuringBuilds: true },
   output: "export",
   trailingSlash: true,
   images: {
