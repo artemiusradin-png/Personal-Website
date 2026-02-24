@@ -632,11 +632,26 @@ export default function Home() {
               <p className="final-page-kicker">CONNECT</p>
               <h2>Credentials</h2>
               <p className="final-page-copy">
-                UBC. Finance and economics track. Research on redistribution and growth.
+                UBC undergraduate focused on finance and economics, with experience across corporate banking, public policy, and economic research in Canada, Europe, and Asia.
               </p>
               <div className="final-page-divider" aria-hidden="true" />
-              <p className="final-page-contact">artemius.radin@gmail.com</p>
-              <p className="final-page-contact">linkedin.com/in/artemisradin</p>
+              <p className="final-page-contact">aradin@student.ubc.ca</p>
+              <p className="final-page-contact">
+                <a
+                  className="contact-link contact-link-mobile"
+                  href="linkedin://in/artemisradin"
+                  aria-label="Open LinkedIn profile in app"
+                >
+                  linkedin.com/in/artemisradin
+                </a>
+                <a
+                  className="contact-link contact-link-desktop"
+                  href="https://www.linkedin.com/in/artemisradin/"
+                  aria-label="Open LinkedIn profile website"
+                >
+                  linkedin.com/in/artemisradin
+                </a>
+              </p>
             </section>
           </main>
         </div>
@@ -650,11 +665,26 @@ export default function Home() {
         <p className="credentials-kicker">CONNECT</p>
         <h2>Credentials</h2>
         <p className="credentials-copy">
-          UBC. Finance and economics track. Research on redistribution and growth.
+          UBC undergraduate focused on finance and economics, with experience across corporate banking, public policy, and economic research in Canada, Europe, and Asia.
         </p>
         <div className="credentials-divider" aria-hidden="true" />
-        <p className="credentials-contact">artemius.radin@gmail.com</p>
-        <p className="credentials-contact">linkedin.com/in/artemisradin</p>
+        <p className="credentials-contact">aradin@student.ubc.ca</p>
+        <p className="credentials-contact">
+          <a
+            className="contact-link contact-link-mobile"
+            href="linkedin://in/artemisradin"
+            aria-label="Open LinkedIn profile in app"
+          >
+            linkedin.com/in/artemisradin
+          </a>
+          <a
+            className="contact-link contact-link-desktop"
+            href="https://www.linkedin.com/in/artemisradin/"
+            aria-label="Open LinkedIn profile website"
+          >
+            linkedin.com/in/artemisradin
+          </a>
+        </p>
       </section>
     </div>
   );
