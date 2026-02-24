@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import dynamic from "next/dynamic";
 
 type JourneyStage = {
@@ -33,12 +33,12 @@ const stages: JourneyStage[] = [
     zoom: 6,
     title: "Academic foundation in Kyiv",
     summary:
-      "Enrolled at Lyzeum Naukova Zmina, a top Ukrainian specialized school with a focus on natural sciences and mathematics. Built a strong quantitative foundation and developed early fluency in English, setting the stage for an international academic path.",
+      "Enrolled at Lyzeum Naukova Zmina, a specialized school with a focus on natural sciences and economics. Built a strong quantitative foundation in mathematics and developed early fluency in English and German, setting the stage for an international academic path.",
     highlights: [
       "Core curriculum in mathematics, physics, and economics",
       "Early interest in international finance and capital markets",
       "Competitive entrance to specialized lyceum program",
-      "Multilingual development (Ukrainian, English)",
+      "Multilingual development (Ukrainian, English, German)",
     ],
   },
   {
@@ -52,7 +52,7 @@ const stages: JourneyStage[] = [
     zoom: 6,
     title: "War in Ukraine and relocation",
     summary:
-      "Russia's full-scale invasion in February 2022 reshaped daily life in Kyiv. Amid the disruption, I made the difficult decision to relocate to Germany to continue my education safely and stay on track toward international finance and policy.",
+      "Russia's full-scale invasion in February 2022 reshaped daily life in Kyiv. Despite the disruption, I maintained focus on long-term goals and made the difficult decision to relocate to Germany to continue my education safely while preserving my path toward international finance and policy.",
     highlights: [
       "Adapted to wartime conditions while completing school requirements",
       "Evaluated options for continuing education abroad",
@@ -61,21 +61,20 @@ const stages: JourneyStage[] = [
     ],
   },
   {
-    id: "2022-karlsruhe",
+    id: "2022-ettlingen",
     navLabel: "2022 • Germany",
     year: "2022",
-    city: "Karlsruhe",
+    city: "Ettlingen",
     country: "Germany",
-    lat: 49.0069,
-    lng: 8.4037,
+    lat: 48.9408,
+    lng: 8.4072,
     zoom: 7,
     title: "Move to Germany",
     summary:
-      "Settled in Karlsruhe, Baden-Württemberg, and studied at Heisenberg-Gymnasium on scholarship while continuing secondary education. During this period, I learned German and adapted to local academic and professional environments. Interned at a German manufacturing enterprise, gaining first-hand experience in financial planning and business modeling in a real corporate environment.",
+      "Settled in Ettlingen, Baden-Württemberg, and completed secondary education at Heisenberg-Gymnasium. Joined Wolter GmbH as an intern, gaining first-hand experience in financial planning and business modeling in a real corporate environment.",
     highlights: [
-      "Scholarship-supported study and Abitur preparation at Heisenberg-Gymnasium",
-      "German language development through study and daily life",
-      "Financial planning and analysis support at a German manufacturing enterprise",
+      "Abitur preparation at Heisenberg-Gymnasium",
+      "Financial planning and analysis support at Wolter GmbH",
       "Built Excel models for budgeting and forecasting",
       "Exposure to German business culture and corporate finance",
     ],
@@ -110,7 +109,7 @@ const stages: JourneyStage[] = [
     zoom: 7,
     title: "Government policy exposure",
     summary:
-      "Interned in the Deutscher Bundestag (German Parliament) in the office of Nicolas Zippelius, MdB. Supported policy analysis and briefing preparation for economic and financial committee discussions, gaining insight into how legislation and regulation shape the financial sector.",
+      "Interned in the Deutscher Bundestag in the office of Nicolas Zippelius, MdB. Supported policy analysis and briefing preparation for economic and financial committee discussions, gaining insight into how legislation and regulation shape the financial sector.",
     highlights: [
       "Analyst Intern in Office of Nicolas Zippelius, MdB",
       "Committee-level strategic briefing and research support",
@@ -129,13 +128,12 @@ const stages: JourneyStage[] = [
     zoom: 7,
     title: "Corporate banking execution",
     summary:
-      "Joined BNP Paribas in Warsaw as a Financial Analyst Intern in the Corporate Client Group. Supported corporate client coverage across sectors, helped prepare relationship materials and internal analyses, and contributed to deal and portfolio workflows with structured analytical support.",
+      "Joined BNP Paribas in Warsaw as a Financial Analyst Intern in the Corporate Client Group. Supported cross-border financing and M&A processes, built valuation models (DCF, LBO, comparables), and developed automated checks for deal due diligence.",
     highlights: [
       "Financial Analyst Intern, Corporate Client Group",
-      "Supported corporate client relationship management and coverage",
-      "Prepared analytical materials for meetings, reviews, and internal discussions",
-      "Contributed to cross-border financing workflows and coordination",
-      "Improved data checks and reporting processes for deal and portfolio monitoring",
+      "Built DCF, LBO, and comparables valuation models",
+      "Supported cross-border financing and deal execution",
+      "Automated data checks and due diligence processes",
     ],
   },
   {
@@ -149,13 +147,12 @@ const stages: JourneyStage[] = [
     zoom: 7,
     title: "National finance competition performance",
     summary:
-      "Served as team lead for a group of 4 that earned 2nd place at the Battle on Bay Finance Competition in Toronto. Focused on company valuation and stock pitching across multiple case rounds, competing with students representing universities from across Canada.",
+      "Led a team of 4 to 2nd place at the Battle on Bay Finance Competition in Toronto. Served as valuation analyst, applying DCF, LBO, comparables, VaR, and sensitivity analysis across multiple case studies under time pressure.",
     highlights: [
       "2nd Place, Battle on Bay Finance Competition",
-      "Served as team lead for a group of 4",
-      "Focused on company valuation and stock pitch development",
-      "Presented recommendations under tight competition timelines",
-      "Competed with students representing universities across Canada",
+      "Led team of 4 across multiple case studies",
+      "Applied DCF, LBO, comparables, VaR, and sensitivity methods",
+      "Competed against top Canadian finance programs",
     ],
   },
   {
@@ -169,9 +166,9 @@ const stages: JourneyStage[] = [
     zoom: 8,
     title: "Asia exposure and policy engagement",
     summary:
-      "Exchange semester at CUHK Business School (Finance) in Hong Kong. In parallel, joined the Institute of Legislative Ideas and the Institute of Economic Strategy in Ukraine, contributing to policy and economic research while building Asia-Pacific exposure.",
+      "Exchange semester at CUHK Business School (Finance track) in Hong Kong. In parallel, joined the Institute of Legislative Ideas and the Institute of Economic Strategy in Ukraine, contributing to policy and economic research while building Asia-Pacific exposure.",
     highlights: [
-      "CUHK exchange semester (Finance)",
+      "CUHK exchange semester (Finance track)",
       "Joined Institute of Legislative Ideas (Ukraine)",
       "Joined Institute of Economic Strategy (Ukraine)",
       "Asia-Pacific finance and markets exposure",
@@ -221,7 +218,16 @@ type PageFlow = "landing" | "about" | "journey";
 export default function Home() {
   const basePath = process.env.NODE_ENV === "production" ? "/Personal-Website" : "";
   const landingBackgroundUrl = `${basePath}/landing-bg.jpg`;
-  const aboutPhotoUrl = `${basePath}/IMG_0628.jpg`;
+  const aboutDesktopImageUrl = `${basePath}/about-desktop.jpg`;
+  const aboutMobileImageUrl = `${basePath}/about-mobile.jpg`;
+  const aboutHeroStyle = useMemo(
+    () =>
+      ({
+        ["--about-bg-desktop" as string]: `url("${aboutDesktopImageUrl}")`,
+        ["--about-bg-mobile" as string]: `url("${aboutMobileImageUrl}")`,
+      }) as CSSProperties,
+    [aboutDesktopImageUrl, aboutMobileImageUrl],
+  );
   const [activeStageId, setActiveStageId] = useState(stages[0].id);
   const [pageFlow, setPageFlow] = useState<PageFlow>("landing");
   const [isLeavingLanding, setIsLeavingLanding] = useState(false);
@@ -229,8 +235,6 @@ export default function Home() {
   const [isLandingReady, setIsLandingReady] = useState(false);
   const [isAboutReady, setIsAboutReady] = useState(false);
   const [isEntryLockActive, setIsEntryLockActive] = useState(false);
-  const [isTimelineAtEnd, setIsTimelineAtEnd] = useState(false);
-  const [isMobileCredentialsOpen, setIsMobileCredentialsOpen] = useState(false);
   const journeyStartRef = useRef<HTMLDivElement | null>(null);
   const jumpLockRef = useRef(false);
   const touchStartYRef = useRef<number | null>(null);
@@ -238,37 +242,17 @@ export default function Home() {
   const hasEnteredJourney = pageFlow === "journey";
 
   useEffect(() => {
-    const resetScrollPosition = () => {
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-      const timelinePanel = document.querySelector<HTMLElement>(".timeline-panel");
-      if (timelinePanel) timelinePanel.scrollTop = 0;
-    };
-
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
-    }
-
-    resetScrollPosition();
-    const rafId = window.requestAnimationFrame(resetScrollPosition);
-
-    const handlePageShow = (event: PageTransitionEvent) => {
-      if (event.persisted) resetScrollPosition();
-    };
-
-    window.addEventListener("pageshow", handlePageShow);
-
-    return () => {
-      window.removeEventListener("pageshow", handlePageShow);
-      window.cancelAnimationFrame(rafId);
-    };
-  }, []);
-
-  useEffect(() => {
     const id = window.requestAnimationFrame(() => setIsLandingReady(true));
     return () => window.cancelAnimationFrame(id);
   }, []);
+
+  useEffect(() => {
+    const desktopImage = new Image();
+    desktopImage.src = aboutDesktopImageUrl;
+
+    const mobileImage = new Image();
+    mobileImage.src = aboutMobileImageUrl;
+  }, [aboutDesktopImageUrl, aboutMobileImageUrl]);
 
   useEffect(() => {
     if (pageFlow !== "about") return;
@@ -345,59 +329,6 @@ export default function Home() {
       if (rafId) window.cancelAnimationFrame(rafId);
     };
   }, [hasEnteredJourney]);
-
-  useEffect(() => {
-    if (pageFlow !== "journey") {
-      setIsTimelineAtEnd(false);
-      return;
-    }
-
-    const timelinePanel = document.querySelector<HTMLElement>(".timeline-panel");
-    if (!timelinePanel) {
-      setIsTimelineAtEnd(false);
-      return;
-    }
-
-    let rafId = 0;
-
-    const updateTimelineEndState = () => {
-      rafId = 0;
-      const maxScrollTop = timelinePanel.scrollHeight - timelinePanel.clientHeight;
-      const atEnd = maxScrollTop <= 2 || timelinePanel.scrollTop >= maxScrollTop - 8;
-      setIsTimelineAtEnd((current) => (current === atEnd ? current : atEnd));
-    };
-
-    const requestUpdate = () => {
-      if (rafId) return;
-      rafId = window.requestAnimationFrame(updateTimelineEndState);
-    };
-
-    timelinePanel.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
-    requestUpdate();
-
-    return () => {
-      timelinePanel.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
-      if (rafId) window.cancelAnimationFrame(rafId);
-    };
-  }, [pageFlow]);
-
-  useEffect(() => {
-    if (pageFlow !== "journey") {
-      setIsMobileCredentialsOpen(false);
-      return;
-    }
-
-    if (!window.matchMedia("(max-width: 1099px)").matches) {
-      setIsMobileCredentialsOpen(false);
-      return;
-    }
-
-    if (activeStageId === "whats-next" && isTimelineAtEnd) {
-      setIsMobileCredentialsOpen(true);
-    }
-  }, [pageFlow, activeStageId, isTimelineAtEnd]);
 
   useEffect(() => {
     if (!hasEnteredJourney) return;
@@ -505,6 +436,7 @@ export default function Home() {
       {pageFlow === "about" && (
         <section
           className={`about-hero ${isAboutReady ? "ready" : ""} ${isLeavingAbout ? "leaving" : ""}`}
+          style={aboutHeroStyle}
           onWheel={(event) => {
             if (event.deltaY > 8) {
               event.preventDefault();
@@ -524,28 +456,30 @@ export default function Home() {
             }
           }}
         >
-          <div className="about-menu-layout">
-            <p className="about-menu-heading">
-              ABOUT ME <span />
-            </p>
-            <p className="about-topic-item">GLOBAL FINANCE &amp; POLICY</p>
-            <p className="about-intro">
-              I am a finance student at UBC building at the intersection of
-              corporate finance, public policy, and international markets. My path
-              has taken me from Kyiv to Germany, Canada, Poland, and Hong Kong,
-              where I have combined academic rigor with hands-on experience in
-              banking, government, and research. I am especially interested in how
-              capital markets, institutions, and regulation shape long-term
-              economic growth. Through internships, competitions, and research, I
-              focus on building practical analytical skills while developing a
-              global perspective on finance and policy.
-            </p>
+          <div className="about-shell">
+            <div className="about-panel">
+              <p className="landing-kicker about-kicker">Who I Am</p>
+              <h1>Artemis Radin</h1>
+              <p className="about-intro">
+                Finance and economics student at UBC, currently on exchange at CUHK in Hong Kong.
+              </p>
+              <p className="about-detail">
+                Born in Kyiv and relocated to Germany during the war, I built a path across corporate banking, policy, and research.
+              </p>
+            </div>
+            <aside className="about-rail" aria-label="Profile highlights">
+              <p>
+                Focus: finance, policy, and global markets with hands-on experience at BNP Paribas, the German Bundestag, and Ukrainian think tanks.
+              </p>
+              <div className="about-tags" aria-label="Focus areas">
+                <span>Finance</span>
+                <span>Policy</span>
+                <span>Research</span>
+                <span>Global Markets</span>
+              </div>
+              <p className="about-languages">Ukrainian • English • German</p>
+            </aside>
           </div>
-          <div
-            className="about-photo-panel"
-            style={{ backgroundImage: `url("${aboutPhotoUrl}")` }}
-            aria-hidden="true"
-          />
           <div className="landing-swipe-hint about-swipe-hint" aria-hidden="true">
             <span>Scroll Down</span>
             <div className="swipe-chevrons">
@@ -628,34 +562,9 @@ export default function Home() {
                 </ul>
               </article>
             ))}
-            <section className="final-landing-page" aria-label="Connect and credentials">
-              <p className="final-page-kicker">CONNECT</p>
-              <h2>Credentials</h2>
-              <p className="final-page-copy">
-                UBC. Finance and economics track. Research on redistribution and growth.
-              </p>
-              <div className="final-page-divider" aria-hidden="true" />
-              <p className="final-page-contact">artemius.radin@gmail.com</p>
-              <p className="final-page-contact">linkedin.com/in/artemisradin</p>
-            </section>
           </main>
         </div>
       </div>
-      <section
-        className={`credentials-screen mobile-credentials-screen ${
-          isMobileCredentialsOpen ? "visible" : ""
-        }`}
-        aria-label="Connect and credentials"
-      >
-        <p className="credentials-kicker">CONNECT</p>
-        <h2>Credentials</h2>
-        <p className="credentials-copy">
-          UBC. Finance and economics track. Research on redistribution and growth.
-        </p>
-        <div className="credentials-divider" aria-hidden="true" />
-        <p className="credentials-contact">artemius.radin@gmail.com</p>
-        <p className="credentials-contact">linkedin.com/in/artemisradin</p>
-      </section>
     </div>
   );
 }

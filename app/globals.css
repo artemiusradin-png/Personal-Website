@@ -1210,21 +1210,6 @@ li {
     scrollbar-width: none;
   }
 
-  .timeline-panel::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: 0.58rem;
-    width: 8px;
-    height: 8px;
-    border-right: 1.8px solid rgba(0, 0, 0, 0.82);
-    border-bottom: 1.8px solid rgba(0, 0, 0, 0.82);
-    transform: translateX(-50%) rotate(45deg);
-    opacity: 0.72;
-    pointer-events: none;
-    z-index: 5;
-  }
-
   .timeline-panel::-webkit-scrollbar {
     display: none;
   }
@@ -1239,11 +1224,25 @@ li {
     scroll-snap-align: start;
     scroll-snap-stop: always;
     margin: 0;
-    padding: 1.1rem 1rem 1.25rem;
+    padding: 1.1rem 1rem 1.5rem;
   }
 
   .stage-card:hover {
     background: rgba(255, 255, 255, 0.98);
+  }
+
+  .stage-card::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0.62rem;
+    width: 8px;
+    height: 8px;
+    border-right: 1.8px solid rgba(0, 0, 0, 0.82);
+    border-bottom: 1.8px solid rgba(0, 0, 0, 0.82);
+    transform: translateX(-50%) rotate(45deg);
+    opacity: 0.72;
+    pointer-events: none;
   }
 
   .final-landing-page {
