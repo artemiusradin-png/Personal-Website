@@ -641,7 +641,7 @@ li {
     left: 0.7rem;
     z-index: 6;
     max-width: min(74vw, 280px);
-    padding: 0.5rem 0;
+    padding: 0;
     border: 0;
     background: transparent;
     backdrop-filter: none;
@@ -780,7 +780,7 @@ li {
     content: "";
     position: absolute;
     left: 50%;
-    top: 0.58rem;
+    bottom: 0.58rem;
     width: 8px;
     height: 8px;
     border-right: 1.8px solid rgba(0, 0, 0, 0.82);
