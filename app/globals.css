@@ -151,6 +151,81 @@ body {
   font-size: 0.73rem;
 }
 
+@media (max-width: 1099px) {
+  .landing-hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+  }
+
+  .landing-news-shell {
+    position: relative;
+    min-height: 100%;
+    height: 100%;
+    padding-top: 0;
+    display: block;
+  }
+
+  .landing-news-title {
+    position: absolute;
+    top: calc(env(safe-area-inset-top, 0px) + 0.7rem);
+    left: 0;
+    right: 0;
+    margin: 0;
+    font-size: clamp(2.05rem, 10vw, 2.85rem);
+    line-height: 0.94;
+  }
+
+  .landing-news-copy {
+    position: absolute;
+    top: calc(env(safe-area-inset-top, 0px) + 7.6rem);
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(92vw, 32ch);
+    margin: 0;
+    font-size: 1.03rem;
+    line-height: 1.4;
+  }
+
+  .landing-news-accent {
+    position: absolute;
+    top: calc(env(safe-area-inset-top, 0px) + 12.5rem);
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+  }
+
+  .landing-feature-card {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-top: 0;
+  }
+
+  .landing-feature-card img {
+    height: 55vh;
+    height: 55svh;
+  }
+
+  .landing-feature-overlay {
+    bottom: 1.25rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .landing-hero .landing-swipe-hint {
+    position: absolute;
+    left: 50%;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 0.45rem);
+    transform: translateX(-50%);
+    margin: 0;
+    z-index: 4;
+  }
+}
+
 /* About Me page – hero layout with photo background and scroll animation */
 .about-hero {
   --about-bg-desktop: none;
@@ -399,9 +474,9 @@ body {
   margin-top: 1rem;
   display: grid;
   justify-items: center;
-  gap: 0.55rem;
+  gap: 0.35rem;
   color: #ffffff;
-  font-size: 0.98rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -409,8 +484,8 @@ body {
 }
 
 .swipe-chevrons {
-  width: 44px;
-  height: 54px;
+  width: 10px;
+  height: 10px;
   position: relative;
   display: grid;
   justify-items: center;
@@ -418,28 +493,22 @@ body {
 
 .swipe-chevrons i {
   position: absolute;
-  width: 20px;
-  height: 20px;
-  border-right: 3px solid #fff;
-  border-bottom: 3px solid #fff;
+  width: 8px;
+  height: 8px;
+  border-right: 1.8px solid #fff;
+  border-bottom: 1.8px solid #fff;
   transform: rotate(45deg);
-  opacity: 0;
-  animation: chevronDown 1.2s ease-in-out infinite;
-}
-
-.swipe-chevrons i:nth-child(1) {
+  opacity: 0.8;
+  animation: none;
   top: 0;
-  animation-delay: 0s;
 }
 
 .swipe-chevrons i:nth-child(2) {
-  top: 12px;
-  animation-delay: 0.16s;
+  display: none;
 }
 
 .swipe-chevrons i:nth-child(3) {
-  top: 24px;
-  animation-delay: 0.32s;
+  display: none;
 }
 
 @keyframes chevronDown {
