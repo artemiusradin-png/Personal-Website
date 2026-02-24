@@ -538,20 +538,15 @@ export default function Home() {
                 </ul>
               </article>
             ))}
-            <section className="connect-credentials" aria-label="Connect and credentials">
-              <p className="about-menu-heading">
-                CONNECT <span />
+            <section className="final-landing-page" aria-label="Connect and credentials">
+              <p className="final-page-kicker">CONNECT</p>
+              <h2>Credentials</h2>
+              <p className="final-page-copy">
+                UBC Sauder School of Business. Finance and economics track. Research on redistribution and growth.
               </p>
-              <p className="about-topic-item">CREDENTIALS</p>
-              <p className="about-track-item">UBC SAUDER SCHOOL OF BUSINESS</p>
-              <p className="about-track-item">FINANCE + ECONOMICS TRACK</p>
-              <p className="about-track-item">RESEARCH: REDISTRIBUTION &amp; GROWTH</p>
-
-              <p className="about-menu-heading about-menu-heading-secondary">
-                CONTACT <span />
-              </p>
-              <p className="about-track-item">ARTEMIUS.RADIN@GMAIL.COM</p>
-              <p className="about-track-item">LINKEDIN: /IN/ARTEMISRADIN</p>
+              <div className="final-page-divider" aria-hidden="true" />
+              <p className="final-page-contact">artemius.radin@gmail.com</p>
+              <p className="final-page-contact">linkedin.com/in/artemisradin</p>
             </section>
           </main>
         </div>
