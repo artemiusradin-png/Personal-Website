@@ -27,17 +27,13 @@ body {
   position: relative;
   z-index: 5;
   min-height: 100vh;
-  padding: clamp(1.5rem, 4vw, 3.5rem);
+  padding: clamp(1.1rem, 3vw, 2.2rem);
   display: grid;
   align-content: center;
   justify-items: center;
   text-align: center;
-  gap: 0.85rem;
-  background:
-    linear-gradient(180deg, rgba(10, 20, 30, 0.55) 0%, rgba(10, 20, 30, 0.4) 100%);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  gap: 0;
+  background: #07090c;
   opacity: 0;
   transform: translateY(16px) scale(0.992);
   transition: opacity 360ms ease, transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -52,6 +48,98 @@ body {
   opacity: 0;
   transform: translateY(-34px) scale(0.985);
   pointer-events: none;
+}
+
+.landing-news-shell {
+  width: min(100%, 430px);
+  margin: 0 auto;
+}
+
+.landing-news-title {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(2.2rem, 9vw, 3.35rem);
+  line-height: 0.92;
+  letter-spacing: 0.08em;
+}
+
+.landing-news-title span {
+  display: block;
+}
+
+.landing-news-copy {
+  margin: 1.15rem auto 0;
+  max-width: 29ch;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: clamp(0.98rem, 2.8vw, 1.2rem);
+  line-height: 1.45;
+}
+
+.landing-news-copy span {
+  text-decoration: underline;
+  text-decoration-color: #f5ca39;
+  text-underline-offset: 0.16rem;
+}
+
+.landing-news-accent {
+  width: 2.2rem;
+  height: 4px;
+  margin: 1rem auto 0;
+  background: #f5ca39;
+}
+
+.landing-feature-card {
+  margin-top: 1.6rem;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  outline: none;
+}
+
+.landing-feature-card img {
+  width: 100%;
+  height: clamp(270px, 44vh, 420px);
+  object-fit: cover;
+  display: block;
+}
+
+.landing-feature-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1rem 0.9rem 0.92rem;
+  text-align: left;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.74) 68%);
+  color: #fff;
+}
+
+.landing-feature-overlay p {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.landing-feature-overlay h2 {
+  margin: 0.45rem 0 0;
+  font-size: clamp(1.45rem, 5.7vw, 2.1rem);
+  line-height: 1.1;
+}
+
+.landing-feature-overlay span {
+  display: inline-block;
+  margin-top: 0.65rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.landing-hero .landing-swipe-hint {
+  margin-top: 0.95rem;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.73rem;
 }
 
 /* About Me page – hero layout with photo background and scroll animation */
