@@ -395,6 +395,9 @@ export default function Home() {
       {pageFlow === "landing" && (
         <section
           className={`landing-hero ${isLandingReady ? "ready" : ""} ${isLeavingLanding ? "leaving" : ""}`}
+          style={{
+            backgroundImage: `linear-gradient(180deg, rgba(10, 20, 30, 0.55) 0%, rgba(10, 20, 30, 0.4) 100%), url("${landingBackgroundUrl}")`,
+          }}
           onWheel={(event) => {
             if (event.deltaY > 8) {
               event.preventDefault();
@@ -414,33 +417,17 @@ export default function Home() {
             }
           }}
         >
-          <div className="landing-news-shell">
-            <div className="landing-news-top">
-              <h1 className="landing-news-title">
-                <span>MY</span>
-                <span>JOURNEY</span>
-              </h1>
-              <p className="landing-news-copy">
-                <span>Scroll</span> to explore my path across finance, policy, and global markets.
-              </p>
-              <div className="landing-news-accent" aria-hidden="true" />
-            </div>
-
-            <article className="landing-feature-card" role="button" tabIndex={0}>
-              <img src={landingBackgroundUrl} alt="Featured story" loading="eager" />
-              <div className="landing-feature-overlay">
-                <p>FINANCE &amp; POLICY</p>
-                <h2>From Kyiv to global markets: building an international path</h2>
-              </div>
-            </article>
-
-            <div className="landing-swipe-hint" aria-hidden="true">
-              <span>Scroll Down</span>
-              <div className="swipe-chevrons">
-                <i />
-                <i />
-                <i />
-              </div>
+          <p className="landing-kicker">Artemis Radin</p>
+          <h1>Professional Journey</h1>
+          <p>
+            Scroll down to explore who I am and my interactive career timeline.
+          </p>
+          <div className="landing-swipe-hint" aria-hidden="true">
+            <span>Scroll Down</span>
+            <div className="swipe-chevrons">
+              <i />
+              <i />
+              <i />
             </div>
           </div>
         </section>
