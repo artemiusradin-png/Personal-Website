@@ -34,8 +34,7 @@ body {
   text-align: center;
   gap: 0.85rem;
   background:
-    linear-gradient(180deg, rgba(10, 20, 30, 0.55) 0%, rgba(10, 20, 30, 0.4) 100%),
-    url("/landing-bg.png");
+    linear-gradient(180deg, rgba(10, 20, 30, 0.55) 0%, rgba(10, 20, 30, 0.4) 100%);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -53,6 +52,63 @@ body {
   opacity: 0;
   transform: translateY(-34px) scale(0.985);
   pointer-events: none;
+}
+
+/* About Me page – same hero layout and scroll animation as landing */
+.about-hero {
+  position: relative;
+  z-index: 5;
+  min-height: 100vh;
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+  gap: 0.85rem;
+  background:
+    linear-gradient(180deg, rgba(10, 20, 30, 0.55) 0%, rgba(10, 20, 30, 0.4) 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transform: translateY(16px) scale(0.992);
+  transition: opacity 360ms ease, transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-hero.ready {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.about-hero.leaving {
+  opacity: 0;
+  transform: translateY(-34px) scale(0.985);
+  pointer-events: none;
+}
+
+.about-hero .about-intro,
+.about-hero .about-detail {
+  margin: 0;
+  max-width: 52ch;
+  font-size: clamp(0.98rem, 1.35vw, 1.18rem);
+  line-height: 1.7;
+  color: #eef4fb;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.about-hero .about-detail {
+  margin-top: 0.5rem;
+  opacity: 0.92;
+}
+
+.about-hero h1 {
+  font-size: clamp(2.25rem, 5.2vw, 4.8rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  text-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+  margin: 0;
+  max-width: 14ch;
 }
 
 .landing-kicker {
@@ -549,7 +605,7 @@ li {
 
   .year-nav {
     position: fixed;
-    top: calc(50vh + 0.2rem);
+    top: calc(50vh - 1rem);
     left: 0.65rem;
     right: 0.65rem;
     z-index: 4;
@@ -661,7 +717,7 @@ li {
     top: 50vh;
     bottom: 0;
     margin: 0;
-    padding: 2.3rem 0.65rem 0.65rem;
+    padding: 2rem 0.65rem 0.65rem;
     overflow-y: auto;
     overscroll-behavior-y: contain;
     scroll-snap-type: y mandatory;
@@ -677,9 +733,9 @@ li {
     background: rgba(255, 255, 255, 0.96);
     border-color: rgba(17, 17, 17, 0.72);
     backdrop-filter: blur(1px);
-    height: calc(50vh - 3rem);
-    overflow-y: auto;
-    overscroll-behavior: contain;
+    min-height: calc(50vh - 2.8rem);
+    height: auto;
+    overflow: visible;
     scroll-snap-align: start;
     scroll-snap-stop: always;
     margin: 0;

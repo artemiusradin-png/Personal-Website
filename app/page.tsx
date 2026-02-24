@@ -213,15 +213,23 @@ const stages: JourneyStage[] = [
   },
 ];
 
+type PageFlow = "landing" | "about" | "journey";
+
 export default function Home() {
+  const basePath = process.env.NODE_ENV === "production" ? "/Personal-Website" : "";
+  const landingBackgroundUrl = `${basePath}/landing-bg.png`;
   const [activeStageId, setActiveStageId] = useState(stages[0].id);
-  const [hasEnteredJourney, setHasEnteredJourney] = useState(false);
+  const [pageFlow, setPageFlow] = useState<PageFlow>("landing");
   const [isLeavingLanding, setIsLeavingLanding] = useState(false);
+  const [isLeavingAbout, setIsLeavingAbout] = useState(false);
   const [isLandingReady, setIsLandingReady] = useState(false);
+  const [isAboutReady, setIsAboutReady] = useState(false);
   const [isEntryLockActive, setIsEntryLockActive] = useState(false);
   const journeyStartRef = useRef<HTMLDivElement | null>(null);
   const jumpLockRef = useRef(false);
   const touchStartYRef = useRef<number | null>(null);
+
+  const hasEnteredJourney = pageFlow === "journey";
 
   useEffect(() => {
     const id = window.requestAnimationFrame(() => setIsLandingReady(true));
@@ -229,8 +237,14 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    if (pageFlow !== "about") return;
+    const id = window.requestAnimationFrame(() => setIsAboutReady(true));
+    return () => window.cancelAnimationFrame(id);
+  }, [pageFlow]);
+
+  useEffect(() => {
     const previousOverflow = document.body.style.overflow;
-    if (!hasEnteredJourney || isEntryLockActive) {
+    if (pageFlow !== "journey" || isEntryLockActive) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -239,7 +253,7 @@ export default function Home() {
     return () => {
       document.body.style.overflow = previousOverflow;
     };
-  }, [hasEnteredJourney, isEntryLockActive]);
+  }, [pageFlow, isEntryLockActive]);
 
   useEffect(() => {
     if (!hasEnteredJourney) return;
@@ -320,14 +334,35 @@ export default function Home() {
     () => stages.find((stage) => stage.id === activeStageId) ?? stages[0],
     [activeStageId],
   );
-  const jumpToJourney = () => {
-    if (jumpLockRef.current || hasEnteredJourney || isLeavingLanding) return;
+
+  const jumpToAbout = () => {
+    if (jumpLockRef.current || pageFlow !== "landing" || isLeavingLanding) return;
     jumpLockRef.current = true;
     setIsEntryLockActive(true);
     setIsLeavingLanding(true);
     window.setTimeout(() => {
-      setHasEnteredJourney(true);
+      setPageFlow("about");
       setIsLeavingLanding(false);
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }, 420);
+    window.setTimeout(() => {
+      jumpLockRef.current = false;
+      setIsEntryLockActive(false);
+    }, 900);
+  };
+
+  const jumpToJourney = () => {
+    if (jumpLockRef.current || pageFlow === "journey" || isLeavingAbout) return;
+    if (pageFlow === "landing") {
+      jumpToAbout();
+      return;
+    }
+    jumpLockRef.current = true;
+    setIsEntryLockActive(true);
+    setIsLeavingAbout(true);
+    window.setTimeout(() => {
+      setPageFlow("journey");
+      setIsLeavingAbout(false);
       setActiveStageId(stages[0].id);
       window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     }, 420);
@@ -339,9 +374,53 @@ export default function Home() {
 
   return (
     <div>
-      {!hasEnteredJourney && (
+      {pageFlow === "landing" && (
         <section
           className={`landing-hero ${isLandingReady ? "ready" : ""} ${isLeavingLanding ? "leaving" : ""}`}
+          style={{
+            backgroundImage: `linear-gradient(180deg, rgba(10, 20, 30, 0.55) 0%, rgba(10, 20, 30, 0.4) 100%), url("${landingBackgroundUrl}")`,
+          }}
+          onWheel={(event) => {
+            if (event.deltaY > 8) {
+              event.preventDefault();
+              jumpToAbout();
+            }
+          }}
+          onTouchStart={(event) => {
+            touchStartYRef.current = event.touches[0]?.clientY ?? null;
+          }}
+          onTouchMove={(event) => {
+            const startY = touchStartYRef.current;
+            const currentY = event.touches[0]?.clientY;
+            if (startY == null || currentY == null) return;
+            if (startY - currentY > 18) {
+              event.preventDefault();
+              jumpToAbout();
+            }
+          }}
+        >
+          <p className="landing-kicker">Artemis Radin</p>
+          <h1>Professional Journey</h1>
+          <p>
+            Scroll down to explore who I am and my interactive career timeline.
+          </p>
+          <div className="landing-swipe-hint" aria-hidden="true">
+            <span>Scroll Down</span>
+            <div className="swipe-chevrons">
+              <i />
+              <i />
+              <i />
+            </div>
+          </div>
+        </section>
+      )}
+
+      {pageFlow === "about" && (
+        <section
+          className={`about-hero ${isAboutReady ? "ready" : ""} ${isLeavingAbout ? "leaving" : ""}`}
+          style={{
+            backgroundImage: `linear-gradient(180deg, rgba(10, 20, 30, 0.55) 0%, rgba(10, 20, 30, 0.4) 100%), url("${landingBackgroundUrl}")`,
+          }}
           onWheel={(event) => {
             if (event.deltaY > 8) {
               event.preventDefault();
@@ -361,10 +440,13 @@ export default function Home() {
             }
           }}
         >
-          <p className="landing-kicker">Artemis Radin</p>
-          <h1>Professional Journey</h1>
-          <p>
-            Scroll down and the page jumps directly into the interactive career timeline.
+          <p className="landing-kicker">Who I Am</p>
+          <h1>Artemis Radin</h1>
+          <p className="about-intro">
+            I am a finance and economics student at UBC Sauder, currently on exchange at CUHK in Hong Kong. Born in Kyiv, Ukraine, I relocated to Germany during the war and have since built a path across corporate banking, policy, and research.
+          </p>
+          <p className="about-detail">
+            I work at the intersection of finance, policy, and global markets—with experience at BNP Paribas, the German Bundestag, and think tanks in Ukraine. I speak Ukrainian, English, and German, and I am conducting research on redistribution and economic growth across Canada and China.
           </p>
           <div className="landing-swipe-hint" aria-hidden="true">
             <span>Scroll Down</span>
@@ -379,7 +461,7 @@ export default function Home() {
 
       <div
         ref={journeyStartRef}
-        className={`journey-page ${hasEnteredJourney ? "entered-from-landing" : "is-hidden-before-entry"}`}
+        className={`journey-page ${pageFlow === "journey" ? "entered-from-landing" : "is-hidden-before-entry"}`}
       >
         <div className="map-background" aria-hidden="true">
           <JourneyVisual stage={activeStage} allStages={stages} />
