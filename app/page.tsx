@@ -545,6 +545,21 @@ export default function Home() {
           </main>
         </div>
       </div>
+      <section
+        className={`credentials-screen mobile-credentials-screen ${
+          pageFlow === "journey" && activeStage.id === "whats-next" ? "visible" : ""
+        }`}
+        aria-label="Connect and credentials"
+      >
+        <p className="credentials-kicker">CONNECT</p>
+        <h2>Credentials</h2>
+        <p className="credentials-copy">
+          UBC Sauder School of Business. Finance and economics track. Research on redistribution and growth.
+        </p>
+        <div className="credentials-divider" aria-hidden="true" />
+        <p className="credentials-contact">artemius.radin@gmail.com</p>
+        <p className="credentials-contact">linkedin.com/in/artemisradin</p>
+      </section>
     </div>
   );
 }
