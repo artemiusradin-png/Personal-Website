@@ -71,7 +71,7 @@ const stages: JourneyStage[] = [
     zoom: 7,
     title: "Move to Germany",
     summary:
-      "Settled in Karlsruhe, Baden-Württemberg, and studied at Heisenberg-Gymnasium on scholarship while continuing secondary education. During this period, I learned German and adapted to local academic and professional environments. Interned at a German manufacturing enterprise, gaining first-hand experience in financial planning and business modeling in a real corporate environment.",
+      "Settled in Karlsruhe, Baden-Württemberg, and studied at Heisenberg-Gymnasium, a private gymnasium, on scholarship while continuing secondary education. During this period, I learned German and adapted to local academic and professional environments. Interned at a German manufacturing enterprise, gaining first-hand experience in financial planning and business modeling in a real corporate environment.",
     highlights: [
       "Scholarship-supported study and Abitur preparation at Heisenberg-Gymnasium",
       "German language development through study and daily life",

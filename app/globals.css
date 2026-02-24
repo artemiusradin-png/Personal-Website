@@ -1174,7 +1174,7 @@ li {
   .year-link:hover,
   .year-link.active,
   .year-link.active.active-shift-left {
-    transform: scale(1.2);
+    transform: scaleX(1.2);
     transform-origin: center;
     color: #000;
     font-weight: 800;
@@ -1239,8 +1239,8 @@ li {
     background: rgba(255, 255, 255, 0.96);
     border-color: rgba(17, 17, 17, 0.72);
     backdrop-filter: blur(1px);
-    min-height: calc(100vh - var(--mobile-map-split) - 2.55rem);
-    height: auto;
+    min-height: 0;
+    height: fit-content;
     overflow: visible;
     scroll-snap-align: start;
     scroll-snap-stop: always;
