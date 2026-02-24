@@ -391,10 +391,10 @@ export default function Home() {
       return;
     }
 
-    if (activeStage.id === "whats-next" && isTimelineAtEnd) {
+    if (activeStageId === "whats-next" && isTimelineAtEnd) {
       setIsMobileCredentialsOpen(true);
     }
-  }, [pageFlow, activeStage.id, isTimelineAtEnd]);
+  }, [pageFlow, activeStageId, isTimelineAtEnd]);
 
   useEffect(() => {
     if (!hasEnteredJourney) return;

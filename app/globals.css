@@ -1276,11 +1276,12 @@ li {
 
 @media (min-width: 1100px) {
   .about-hero {
+    --about-photo-width: 65vw;
     overflow: hidden;
   }
 
   .about-menu-layout {
-    width: min(44vw, 34rem);
+    width: min(32vw, 34rem);
   }
 
   .about-photo-panel {
@@ -1289,7 +1290,7 @@ li {
     top: 0;
     right: 0;
     bottom: 0;
-    width: 50vw;
+    width: var(--about-photo-width);
     overflow: hidden;
     background-size: cover;
     background-position: center;
@@ -1315,7 +1316,7 @@ li {
   }
 
   .about-swipe-hint {
-    left: 25%;
+    left: calc((100% - var(--about-photo-width)) / 2);
   }
 
   .mobile-credentials-screen {
