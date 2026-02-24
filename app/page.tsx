@@ -538,6 +538,21 @@ export default function Home() {
                 </ul>
               </article>
             ))}
+            <section className="connect-credentials" aria-label="Connect and credentials">
+              <p className="about-menu-heading">
+                CONNECT <span />
+              </p>
+              <p className="about-topic-item">CREDENTIALS</p>
+              <p className="about-track-item">UBC SAUDER SCHOOL OF BUSINESS</p>
+              <p className="about-track-item">FINANCE + ECONOMICS TRACK</p>
+              <p className="about-track-item">RESEARCH: REDISTRIBUTION &amp; GROWTH</p>
+
+              <p className="about-menu-heading about-menu-heading-secondary">
+                CONTACT <span />
+              </p>
+              <p className="about-track-item">ARTEMIUS.RADIN@GMAIL.COM</p>
+              <p className="about-track-item">LINKEDIN: /IN/ARTEMISRADIN</p>
+            </section>
           </main>
         </div>
       </div>

@@ -61,7 +61,7 @@ body {
 
 .landing-hero > p:not(.landing-kicker),
 .landing-hero > .landing-swipe-hint {
-  transform: translateY(4.4rem);
+  transform: translateY(2.1rem);
 }
 
 /* About page – solid gray menu-style structure */
@@ -89,7 +89,23 @@ body {
 
   .landing-hero > p:not(.landing-kicker),
   .landing-hero > .landing-swipe-hint {
-    transform: translateY(6.4rem);
+    transform: none;
+  }
+
+  .landing-hero > p:not(.landing-kicker) {
+    position: absolute;
+    left: 50%;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 3.1rem);
+    width: min(90vw, 35ch);
+    transform: translateX(-50%);
+  }
+
+  .landing-hero > .landing-swipe-hint {
+    position: absolute;
+    left: 50%;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 0.9rem);
+    transform: translateX(-50%);
+    margin: 0;
   }
 
   .about-hero {
@@ -97,7 +113,7 @@ body {
     justify-items: start;
     text-align: left;
     gap: 0.95rem;
-    padding: calc(env(safe-area-inset-top, 0px) + 1rem) 1rem
+    padding: calc(env(safe-area-inset-top, 0px) + 2.4rem) 1rem
       calc(env(safe-area-inset-bottom, 0px) + 1rem);
   }
 }
@@ -272,26 +288,28 @@ body {
   display: grid;
   justify-items: center;
   gap: 0.35rem;
-  color: #1a2027;
+  color: #4e5761;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-shadow: none;
 }
 
 .about-swipe-hint .swipe-chevrons i {
-  border-right-color: #1a2027;
-  border-bottom-color: #1a2027;
+  border-right-color: #4e5761;
+  border-bottom-color: #4e5761;
 }
 
 @media (max-width: 1099px) {
   .about-topic-item {
-    font-size: clamp(1.7rem, 9vw, 2.4rem);
+    font-size: clamp(1.45rem, 7.8vw, 2.05rem);
+    margin-top: 0.8rem;
   }
 
   .about-track-item {
-    font-size: 1.03rem;
+    font-size: 0.95rem;
+    margin-top: 0.72rem;
   }
 
   .about-shell {
@@ -805,6 +823,20 @@ li {
   font-size: 1.1em;
 }
 
+.connect-credentials {
+  background: var(--bg);
+  border-top: 1px solid rgba(17, 22, 28, 0.22);
+  padding: 1.45rem 1.5rem 1.7rem;
+}
+
+.connect-credentials .about-topic-item {
+  font-size: clamp(1.7rem, 2.6vw, 2.4rem);
+}
+
+.connect-credentials .about-track-item {
+  font-size: clamp(0.9rem, 1.2vw, 1.02rem);
+}
+
 @media (max-width: 1099px) {
   .journey-page {
     --mobile-map-split: 44vh;
@@ -1019,6 +1051,23 @@ li {
 
   .stage-card:hover {
     background: rgba(255, 255, 255, 0.98);
+  }
+
+  .connect-credentials {
+    min-height: calc(100vh - var(--mobile-map-split) - 2.55rem);
+    padding: 1.05rem 1rem 1.2rem;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .connect-credentials .about-topic-item {
+    font-size: clamp(1.45rem, 7.6vw, 2rem);
+    margin-top: 0.78rem;
+  }
+
+  .connect-credentials .about-track-item {
+    font-size: 0.92rem;
+    margin-top: 0.68rem;
   }
 
   .stage-card ul {
