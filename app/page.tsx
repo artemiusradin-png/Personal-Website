@@ -149,7 +149,7 @@ const stages: JourneyStage[] = [
     zoom: 7,
     title: "National finance competition performance",
     summary:
-      "Served as team lead for a group of 4 that earned 2nd place at the Battle on Bay Finance Competition in Toronto. Focused on company valuation and stock pitching across multiple case rounds, competing with students representing universities from across Canada.",
+      "Earned 2nd place at the Battle on Bay Finance Competition in Toronto as team lead of a group of 4. Focused on company valuation and stock pitching across multiple case rounds, competing with students representing universities from across Canada.",
     highlights: [
       "2nd Place, Battle on Bay Finance Competition",
       "Served as team lead for a group of 4",
@@ -391,13 +391,50 @@ export default function Home() {
 
     if (!window.matchMedia("(max-width: 1099px)").matches) {
       setIsMobileCredentialsOpen(false);
-      return;
     }
+  }, [pageFlow]);
 
-    if (activeStageId === "whats-next" && isTimelineAtEnd) {
-      setIsMobileCredentialsOpen(true);
-    }
-  }, [pageFlow, activeStageId, isTimelineAtEnd]);
+  useEffect(() => {
+    if (pageFlow !== "journey" || isMobileCredentialsOpen) return;
+    if (!window.matchMedia("(max-width: 1099px)").matches) return;
+
+    const timelinePanel = document.querySelector<HTMLElement>(".timeline-panel");
+    if (!timelinePanel) return;
+
+    let swipeStartY: number | null = null;
+
+    const tryOpenCredentials = (deltaY: number) => {
+      if (deltaY <= 10) return;
+      if (activeStageId === "whats-next" && isTimelineAtEnd) {
+        setIsMobileCredentialsOpen(true);
+      }
+    };
+
+    const handleWheel = (event: WheelEvent) => {
+      tryOpenCredentials(event.deltaY);
+    };
+
+    const handleTouchStart = (event: TouchEvent) => {
+      swipeStartY = event.touches[0]?.clientY ?? null;
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      const startY = swipeStartY;
+      const currentY = event.touches[0]?.clientY;
+      if (startY == null || currentY == null) return;
+      tryOpenCredentials(startY - currentY);
+    };
+
+    timelinePanel.addEventListener("wheel", handleWheel, { passive: true });
+    timelinePanel.addEventListener("touchstart", handleTouchStart, { passive: true });
+    timelinePanel.addEventListener("touchmove", handleTouchMove, { passive: true });
+
+    return () => {
+      timelinePanel.removeEventListener("wheel", handleWheel);
+      timelinePanel.removeEventListener("touchstart", handleTouchStart);
+      timelinePanel.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, [pageFlow, activeStageId, isTimelineAtEnd, isMobileCredentialsOpen]);
 
   useEffect(() => {
     if (!hasEnteredJourney) return;
