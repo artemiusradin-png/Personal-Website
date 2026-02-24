@@ -211,6 +211,21 @@ body {
   }
 }
 
+@keyframes mobileScrollHintDown {
+  0% {
+    transform: translateY(-3px) rotate(45deg);
+    opacity: 0.22;
+  }
+  50% {
+    transform: translateY(2px) rotate(45deg);
+    opacity: 0.72;
+  }
+  100% {
+    transform: translateY(6px) rotate(45deg);
+    opacity: 0.15;
+  }
+}
+
 .journey-page {
   position: relative;
   min-height: 100vh;
@@ -738,6 +753,21 @@ li {
     scroll-snap-type: y mandatory;
     scroll-padding-top: 0;
     scrollbar-width: none;
+  }
+
+  .timeline-panel::before {
+    content: "";
+    position: fixed;
+    right: 0.95rem;
+    top: calc(var(--mobile-map-split) + 0.65rem);
+    width: 8px;
+    height: 8px;
+    border-right: 1.8px solid rgba(0, 0, 0, 0.82);
+    border-bottom: 1.8px solid rgba(0, 0, 0, 0.82);
+    transform: rotate(45deg);
+    pointer-events: none;
+    z-index: 5;
+    animation: mobileScrollHintDown 1.15s ease-in-out infinite;
   }
 
   .timeline-panel::-webkit-scrollbar {
