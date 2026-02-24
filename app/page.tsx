@@ -416,20 +416,19 @@ export default function Home() {
         >
           <div className="landing-news-shell">
             <h1 className="landing-news-title">
-              <span>LATEST</span>
+              <span>JOURNEY</span>
               <span>STORIES</span>
             </h1>
             <p className="landing-news-copy">
-              <span>Subscribe</span> for full access to read stories from National Geographic.
+              <span>Scroll</span> to explore my path across finance, policy, and global markets.
             </p>
             <div className="landing-news-accent" aria-hidden="true" />
 
             <article className="landing-feature-card" role="button" tabIndex={0}>
               <img src={landingBackgroundUrl} alt="Featured story" loading="eager" />
               <div className="landing-feature-overlay">
-                <p>HISTORY &amp; CULTURE</p>
-                <h2>Here&apos;s why the electoral college exists</h2>
-                <span>▸ READ</span>
+                <p>FINANCE &amp; POLICY</p>
+                <h2>From Kyiv to global markets: building an international path</h2>
               </div>
             </article>
 

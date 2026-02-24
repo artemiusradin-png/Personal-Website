@@ -27,9 +27,9 @@ body {
   position: relative;
   z-index: 5;
   min-height: 100vh;
-  padding: clamp(1.1rem, 3vw, 2.2rem);
+  padding: 0;
   display: grid;
-  align-content: center;
+  align-content: start;
   justify-items: center;
   text-align: center;
   gap: 0;
@@ -51,8 +51,14 @@ body {
 }
 
 .landing-news-shell {
-  width: min(100%, 430px);
-  margin: 0 auto;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
+  align-content: start;
+  justify-items: center;
+  padding-top: clamp(1.2rem, 5vh, 2.5rem);
 }
 
 .landing-news-title {
@@ -68,7 +74,7 @@ body {
 }
 
 .landing-news-copy {
-  margin: 1.15rem auto 0;
+  margin: 0.9rem auto 0;
   max-width: 29ch;
   color: rgba(255, 255, 255, 0.84);
   font-size: clamp(0.98rem, 2.8vw, 1.2rem);
@@ -84,21 +90,23 @@ body {
 .landing-news-accent {
   width: 2.2rem;
   height: 4px;
-  margin: 1rem auto 0;
+  margin: 0.85rem auto 0;
   background: #f5ca39;
 }
 
 .landing-feature-card {
-  margin-top: 1.6rem;
-  border-radius: 14px;
+  margin-top: 1.2rem;
+  width: 100%;
+  border-radius: 0;
   overflow: hidden;
   position: relative;
   outline: none;
+  align-self: end;
 }
 
 .landing-feature-card img {
   width: 100%;
-  height: clamp(270px, 44vh, 420px);
+  height: clamp(300px, 52vh, 620px);
   object-fit: cover;
   display: block;
 }
@@ -137,7 +145,8 @@ body {
 }
 
 .landing-hero .landing-swipe-hint {
-  margin-top: 0.95rem;
+  margin-top: 0.4rem;
+  margin-bottom: 0.5rem;
   color: rgba(255, 255, 255, 0.86);
   font-size: 0.73rem;
 }
