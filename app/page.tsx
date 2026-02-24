@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 
 type JourneyStage = {
@@ -218,16 +218,6 @@ type PageFlow = "landing" | "about" | "journey";
 export default function Home() {
   const basePath = process.env.NODE_ENV === "production" ? "/Personal-Website" : "";
   const landingBackgroundUrl = `${basePath}/landing-bg.jpg`;
-  const aboutDesktopImageUrl = `${basePath}/about-desktop.jpg`;
-  const aboutMobileImageUrl = `${basePath}/about-mobile.jpg`;
-  const aboutHeroStyle = useMemo(
-    () =>
-      ({
-        ["--about-bg-desktop" as string]: `url("${aboutDesktopImageUrl}")`,
-        ["--about-bg-mobile" as string]: `url("${aboutMobileImageUrl}")`,
-      }) as CSSProperties,
-    [aboutDesktopImageUrl, aboutMobileImageUrl],
-  );
   const [activeStageId, setActiveStageId] = useState(stages[0].id);
   const [pageFlow, setPageFlow] = useState<PageFlow>("landing");
   const [isLeavingLanding, setIsLeavingLanding] = useState(false);
@@ -245,14 +235,6 @@ export default function Home() {
     const id = window.requestAnimationFrame(() => setIsLandingReady(true));
     return () => window.cancelAnimationFrame(id);
   }, []);
-
-  useEffect(() => {
-    const desktopImage = new Image();
-    desktopImage.src = aboutDesktopImageUrl;
-
-    const mobileImage = new Image();
-    mobileImage.src = aboutMobileImageUrl;
-  }, [aboutDesktopImageUrl, aboutMobileImageUrl]);
 
   useEffect(() => {
     if (pageFlow !== "about") return;
@@ -436,7 +418,6 @@ export default function Home() {
       {pageFlow === "about" && (
         <section
           className={`about-hero ${isAboutReady ? "ready" : ""} ${isLeavingAbout ? "leaving" : ""}`}
-          style={aboutHeroStyle}
           onWheel={(event) => {
             if (event.deltaY > 8) {
               event.preventDefault();
@@ -456,29 +437,24 @@ export default function Home() {
             }
           }}
         >
-          <div className="about-shell">
-            <div className="about-panel">
-              <p className="landing-kicker about-kicker">Who I Am</p>
-              <h1>Artemis Radin</h1>
-              <p className="about-intro">
-                Finance and economics student at UBC Sauder, currently on exchange at CUHK in Hong Kong.
-              </p>
-              <p className="about-detail">
-                Born in Kyiv and relocated to Germany during the war, I built a path across corporate banking, policy, and research.
-              </p>
-            </div>
-            <aside className="about-rail" aria-label="Profile highlights">
-              <p>
-                Focus: finance, policy, and global markets with hands-on experience at BNP Paribas, the German Bundestag, and Ukrainian think tanks.
-              </p>
-              <div className="about-tags" aria-label="Focus areas">
-                <span>Finance</span>
-                <span>Policy</span>
-                <span>Research</span>
-                <span>Global Markets</span>
-              </div>
-              <p className="about-languages">Ukrainian • English • German</p>
-            </aside>
+          <div className="about-menu-layout">
+            <p className="about-menu-heading">
+              TOPICS <span />
+            </p>
+            <p className="about-topic-item">ACADEMIC FOUNDATION</p>
+            <p className="about-topic-item">FINANCE</p>
+            <p className="about-topic-item">POLICY</p>
+            <p className="about-topic-item">RESEARCH</p>
+            <p className="about-topic-item">GLOBAL MARKETS</p>
+
+            <p className="about-menu-heading about-menu-heading-secondary">
+              TRACK <span />
+            </p>
+            <p className="about-track-item">KYIV TO GERMANY</p>
+            <p className="about-track-item">UBC SAUDER FINANCE</p>
+            <p className="about-track-item">BNP PARIBAS &amp; BUNDESTAG</p>
+            <p className="about-track-item">HONG KONG EXCHANGE</p>
+            <p className="about-track-item">WHAT&apos;S NEXT?</p>
           </div>
           <div className="landing-swipe-hint about-swipe-hint" aria-hidden="true">
             <span>Scroll Down</span>

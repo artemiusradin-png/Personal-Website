@@ -61,30 +61,21 @@ body {
 
 .landing-hero > p:not(.landing-kicker),
 .landing-hero > .landing-swipe-hint {
-  transform: translateY(2.1rem);
+  transform: translateY(4.4rem);
 }
 
-/* About Me page – hero layout with photo background and scroll animation */
+/* About page – solid gray menu-style structure */
 .about-hero {
-  --about-bg-desktop: none;
-  --about-bg-mobile: none;
   position: relative;
   z-index: 5;
   min-height: 100vh;
-  padding: clamp(1.5rem, 4vw, 3.25rem);
+  padding: clamp(1.35rem, 4vw, 2.1rem);
   display: grid;
   align-content: start;
-  justify-items: center;
+  justify-items: start;
   text-align: left;
-  gap: 0.95rem;
-  padding-top: clamp(1.8rem, 6.5vh, 4.6rem);
-  padding-bottom: clamp(1.2rem, 3.2vh, 2rem);
-  background-image:
-    linear-gradient(120deg, rgba(7, 12, 18, 0.84) 0%, rgba(7, 12, 18, 0.48) 46%, rgba(7, 12, 18, 0.16) 100%),
-    var(--about-bg-desktop);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  gap: 1.1rem;
+  background: var(--bg);
   opacity: 0;
   transform: translateY(16px) scale(0.992);
   transition: opacity 360ms ease, transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -98,19 +89,16 @@ body {
 
   .landing-hero > p:not(.landing-kicker),
   .landing-hero > .landing-swipe-hint {
-    transform: translateY(2.8rem);
+    transform: translateY(6.4rem);
   }
 
   .about-hero {
     align-content: start;
-    justify-items: center;
-    text-align: center;
-    gap: 0.8rem;
-    padding-top: clamp(1.6rem, 5vh, 2.6rem);
-    padding-bottom: clamp(1rem, 2.8vh, 1.6rem);
-    background-image:
-      linear-gradient(180deg, rgba(7, 12, 18, 0.74) 0%, rgba(7, 12, 18, 0.46) 100%),
-      var(--about-bg-mobile);
+    justify-items: start;
+    text-align: left;
+    gap: 0.95rem;
+    padding: calc(env(safe-area-inset-top, 0px) + 1rem) 1rem
+      calc(env(safe-area-inset-bottom, 0px) + 1rem);
   }
 }
 
@@ -119,7 +107,7 @@ body {
   transform: translateY(0) scale(1);
 }
 
-.about-hero.ready .about-shell {
+.about-hero.ready .about-menu-layout {
   animation: aboutPanelIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
 }
 
@@ -142,6 +130,51 @@ body {
   opacity: 0;
   transform: translateY(-34px) scale(0.985);
   pointer-events: none;
+}
+
+.about-menu-layout {
+  width: min(100%, 34rem);
+}
+
+.about-menu-heading {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #4e5761;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.about-menu-heading span {
+  width: 2.8rem;
+  height: 2px;
+  background: #6a737d;
+}
+
+.about-topic-item {
+  margin: 1rem 0 0;
+  color: #11161c;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.about-menu-heading-secondary {
+  margin-top: 2rem;
+}
+
+.about-track-item {
+  margin: 0.85rem 0 0;
+  color: var(--accent);
+  font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
 }
 
 .about-hero .about-intro,
@@ -238,21 +271,29 @@ body {
   justify-self: center;
   display: grid;
   justify-items: center;
-  gap: 0.5rem;
-  color: #f5f8fc;
-  font-size: 0.9rem;
-  font-weight: 600;
+  gap: 0.35rem;
+  color: #1a2027;
+  font-size: 0.75rem;
+  font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
+  text-shadow: none;
 }
 
 .about-swipe-hint .swipe-chevrons i {
-  border-right-color: rgba(245, 248, 252, 0.95);
-  border-bottom-color: rgba(245, 248, 252, 0.95);
+  border-right-color: #1a2027;
+  border-bottom-color: #1a2027;
 }
 
 @media (max-width: 1099px) {
+  .about-topic-item {
+    font-size: clamp(1.7rem, 9vw, 2.4rem);
+  }
+
+  .about-track-item {
+    font-size: 1.03rem;
+  }
+
   .about-shell {
     width: min(94vw, 40rem);
     grid-template-columns: 1fr;
