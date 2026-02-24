@@ -456,21 +456,29 @@ export default function Home() {
             }
           }}
         >
-          <div className="about-panel">
-            <p className="landing-kicker about-kicker">Who I Am</p>
-            <h1>Artemis Radin</h1>
-            <p className="about-intro">
-              I am a finance and economics student at UBC Sauder, currently on exchange at CUHK in Hong Kong. Born in Kyiv, Ukraine, I relocated to Germany during the war and have since built a path across corporate banking, policy, and research.
-            </p>
-            <p className="about-detail">
-              I work at the intersection of finance, policy, and global markets, with experience at BNP Paribas, the German Bundestag, and think tanks in Ukraine. I speak Ukrainian, English, and German, and I am conducting research on redistribution and economic growth across Canada and China.
-            </p>
-            <div className="about-tags" aria-label="Focus areas">
-              <span>Finance</span>
-              <span>Policy</span>
-              <span>Research</span>
-              <span>Global Markets</span>
+          <div className="about-shell">
+            <div className="about-panel">
+              <p className="landing-kicker about-kicker">Who I Am</p>
+              <h1>Artemis Radin</h1>
+              <p className="about-intro">
+                Finance and economics student at UBC Sauder, currently on exchange at CUHK in Hong Kong.
+              </p>
+              <p className="about-detail">
+                Born in Kyiv and relocated to Germany during the war, I built a path across corporate banking, policy, and research.
+              </p>
             </div>
+            <aside className="about-rail" aria-label="Profile highlights">
+              <p>
+                Focus: finance, policy, and global markets with hands-on experience at BNP Paribas, the German Bundestag, and Ukrainian think tanks.
+              </p>
+              <div className="about-tags" aria-label="Focus areas">
+                <span>Finance</span>
+                <span>Policy</span>
+                <span>Research</span>
+                <span>Global Markets</span>
+              </div>
+              <p className="about-languages">Ukrainian • English • German</p>
+            </aside>
           </div>
           <div className="landing-swipe-hint about-swipe-hint" aria-hidden="true">
             <span>Scroll Down</span>
