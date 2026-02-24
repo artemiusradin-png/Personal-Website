@@ -439,22 +439,16 @@ export default function Home() {
         >
           <div className="about-menu-layout">
             <p className="about-menu-heading">
-              TOPICS <span />
+              ABOUT ME <span />
             </p>
-            <p className="about-topic-item">ACADEMIC FOUNDATION</p>
-            <p className="about-topic-item">FINANCE</p>
-            <p className="about-topic-item">POLICY</p>
-            <p className="about-topic-item">RESEARCH</p>
-            <p className="about-topic-item">GLOBAL MARKETS</p>
-
-            <p className="about-menu-heading about-menu-heading-secondary">
-              TRACK <span />
+            <p className="about-topic-item">GLOBAL FINANCE &amp; POLICY</p>
+            <p className="about-intro">
+              I am a finance student at UBC Sauder building at the intersection of
+              corporate finance, public policy, and international markets. My path
+              has taken me from Kyiv to Germany, Canada, Poland, and Hong Kong,
+              where I have combined academic rigor with hands-on experience in
+              banking, government, and research.
             </p>
-            <p className="about-track-item">KYIV TO GERMANY</p>
-            <p className="about-track-item">UBC SAUDER FINANCE</p>
-            <p className="about-track-item">BNP PARIBAS &amp; BUNDESTAG</p>
-            <p className="about-track-item">HONG KONG EXCHANGE</p>
-            <p className="about-track-item">WHAT&apos;S NEXT?</p>
           </div>
           <div className="landing-swipe-hint about-swipe-hint" aria-hidden="true">
             <span>Scroll Down</span>
