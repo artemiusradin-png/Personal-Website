@@ -761,6 +761,10 @@ li {
     background: rgba(255, 255, 255, 0.98);
   }
 
+  .stage-card ul {
+    display: none;
+  }
+
   .corner-name {
     top: 0.55rem;
     right: 0.7rem;
