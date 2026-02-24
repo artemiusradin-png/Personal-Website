@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import dynamic from "next/dynamic";
 
 type JourneyStage = {
@@ -218,6 +218,16 @@ type PageFlow = "landing" | "about" | "journey";
 export default function Home() {
   const basePath = process.env.NODE_ENV === "production" ? "/Personal-Website" : "";
   const landingBackgroundUrl = `${basePath}/landing-bg.png`;
+  const aboutDesktopImageUrl = `${basePath}/about-desktop.jpg`;
+  const aboutMobileImageUrl = `${basePath}/about-mobile.jpg`;
+  const aboutHeroStyle = useMemo(
+    () =>
+      ({
+        ["--about-bg-desktop" as string]: `url("${aboutDesktopImageUrl}")`,
+        ["--about-bg-mobile" as string]: `url("${aboutMobileImageUrl}")`,
+      }) as CSSProperties,
+    [aboutDesktopImageUrl, aboutMobileImageUrl],
+  );
   const [activeStageId, setActiveStageId] = useState(stages[0].id);
   const [pageFlow, setPageFlow] = useState<PageFlow>("landing");
   const [isLeavingLanding, setIsLeavingLanding] = useState(false);
@@ -235,6 +245,14 @@ export default function Home() {
     const id = window.requestAnimationFrame(() => setIsLandingReady(true));
     return () => window.cancelAnimationFrame(id);
   }, []);
+
+  useEffect(() => {
+    const desktopImage = new Image();
+    desktopImage.src = aboutDesktopImageUrl;
+
+    const mobileImage = new Image();
+    mobileImage.src = aboutMobileImageUrl;
+  }, [aboutDesktopImageUrl, aboutMobileImageUrl]);
 
   useEffect(() => {
     if (pageFlow !== "about") return;
@@ -418,9 +436,7 @@ export default function Home() {
       {pageFlow === "about" && (
         <section
           className={`about-hero ${isAboutReady ? "ready" : ""} ${isLeavingAbout ? "leaving" : ""}`}
-          style={{
-            backgroundImage: `linear-gradient(180deg, rgba(10, 20, 30, 0.55) 0%, rgba(10, 20, 30, 0.4) 100%), url("${landingBackgroundUrl}")`,
-          }}
+          style={aboutHeroStyle}
           onWheel={(event) => {
             if (event.deltaY > 8) {
               event.preventDefault();
