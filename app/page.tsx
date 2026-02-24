@@ -447,7 +447,11 @@ export default function Home() {
               corporate finance, public policy, and international markets. My path
               has taken me from Kyiv to Germany, Canada, Poland, and Hong Kong,
               where I have combined academic rigor with hands-on experience in
-              banking, government, and research.
+              banking, government, and research. I am especially interested in how
+              capital markets, institutions, and regulation shape long-term
+              economic growth. Through internships, competitions, and research, I
+              focus on building practical analytical skills while developing a
+              global perspective on finance and policy.
             </p>
           </div>
           <div className="landing-swipe-hint about-swipe-hint" aria-hidden="true">

@@ -217,6 +217,7 @@ body {
 }
 
 .about-hero .about-intro {
+  margin-top: 1rem;
   font-weight: 500;
 }
 
@@ -304,7 +305,7 @@ body {
   display: grid;
   justify-items: center;
   gap: 0.3rem;
-  color: #4e5761;
+  color: #000;
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -320,8 +321,8 @@ body {
 }
 
 .about-swipe-hint .swipe-chevrons i {
-  border-right-color: #4e5761;
-  border-bottom-color: #4e5761;
+  border-right-color: #000;
+  border-bottom-color: #000;
   border-right-width: 1.4px;
   border-bottom-width: 1.4px;
   width: 9px;
@@ -382,12 +383,12 @@ body {
     justify-self: center;
     align-self: end;
     justify-items: center;
-    color: #4e5761;
+    color: #000;
   }
 
   .about-swipe-hint .swipe-chevrons i {
-    border-right-color: #4e5761;
-    border-bottom-color: #4e5761;
+    border-right-color: #000;
+    border-bottom-color: #000;
   }
 }
 
