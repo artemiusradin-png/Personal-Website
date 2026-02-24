@@ -173,9 +173,21 @@ body {
   }
 
   .landing-news-shell {
+    position: relative;
     min-height: 100%;
     height: 100%;
     padding-top: calc(env(safe-area-inset-top, 0px) + 0.5rem);
+  }
+
+  .landing-news-top {
+    position: absolute;
+    top: calc(env(safe-area-inset-top, 0px) + 0.7rem);
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(94vw, 34rem);
+    padding: 0;
+    text-align: center;
+    z-index: 3;
   }
 
   .landing-news-title {
@@ -195,13 +207,17 @@ body {
   }
 
   .landing-feature-card {
-    margin-top: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-top: 0;
   }
 
   .landing-feature-card img {
-    height: 55vh;
-    height: 55svh;
-    min-height: 55svh;
+    height: 47vh;
+    height: 47svh;
+    min-height: 47svh;
   }
 
   .landing-feature-overlay {
