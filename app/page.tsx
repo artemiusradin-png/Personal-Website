@@ -415,14 +415,16 @@ export default function Home() {
           }}
         >
           <div className="landing-news-shell">
-            <h1 className="landing-news-title">
-              <span>MY</span>
-              <span>JOURNEY</span>
-            </h1>
-            <p className="landing-news-copy">
-              <span>Scroll</span> to explore my path across finance, policy, and global markets.
-            </p>
-            <div className="landing-news-accent" aria-hidden="true" />
+            <div className="landing-news-top">
+              <h1 className="landing-news-title">
+                <span>MY</span>
+                <span>JOURNEY</span>
+              </h1>
+              <p className="landing-news-copy">
+                <span>Scroll</span> to explore my path across finance, policy, and global markets.
+              </p>
+              <div className="landing-news-accent" aria-hidden="true" />
+            </div>
 
             <article className="landing-feature-card" role="button" tabIndex={0}>
               <img src={landingBackgroundUrl} alt="Featured story" loading="eager" />
