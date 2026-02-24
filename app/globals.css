@@ -54,6 +54,16 @@ body {
   pointer-events: none;
 }
 
+.landing-hero > .landing-kicker,
+.landing-hero > h1 {
+  transform: translateY(-2.4rem);
+}
+
+.landing-hero > p:not(.landing-kicker),
+.landing-hero > .landing-swipe-hint {
+  transform: translateY(2.1rem);
+}
+
 /* About Me page – hero layout with photo background and scroll animation */
 .about-hero {
   --about-bg-desktop: none;
@@ -81,6 +91,16 @@ body {
 }
 
 @media (max-width: 1099px) {
+  .landing-hero > .landing-kicker,
+  .landing-hero > h1 {
+    transform: translateY(-3.2rem);
+  }
+
+  .landing-hero > p:not(.landing-kicker),
+  .landing-hero > .landing-swipe-hint {
+    transform: translateY(2.8rem);
+  }
+
   .about-hero {
     align-content: start;
     justify-items: center;
