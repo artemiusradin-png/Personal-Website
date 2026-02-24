@@ -218,6 +218,7 @@ type PageFlow = "landing" | "about" | "journey";
 export default function Home() {
   const basePath = process.env.NODE_ENV === "production" ? "/Personal-Website" : "";
   const landingBackgroundUrl = `${basePath}/landing-bg.jpg`;
+  const aboutPhotoUrl = `${basePath}/IMG_0628.jpg`;
   const [activeStageId, setActiveStageId] = useState(stages[0].id);
   const [pageFlow, setPageFlow] = useState<PageFlow>("landing");
   const [isLeavingLanding, setIsLeavingLanding] = useState(false);
@@ -225,11 +226,40 @@ export default function Home() {
   const [isLandingReady, setIsLandingReady] = useState(false);
   const [isAboutReady, setIsAboutReady] = useState(false);
   const [isEntryLockActive, setIsEntryLockActive] = useState(false);
+  const [isTimelineAtEnd, setIsTimelineAtEnd] = useState(false);
   const journeyStartRef = useRef<HTMLDivElement | null>(null);
   const jumpLockRef = useRef(false);
   const touchStartYRef = useRef<number | null>(null);
 
   const hasEnteredJourney = pageFlow === "journey";
+
+  useEffect(() => {
+    const resetScrollPosition = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      const timelinePanel = document.querySelector<HTMLElement>(".timeline-panel");
+      if (timelinePanel) timelinePanel.scrollTop = 0;
+    };
+
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    resetScrollPosition();
+    const rafId = window.requestAnimationFrame(resetScrollPosition);
+
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) resetScrollPosition();
+    };
+
+    window.addEventListener("pageshow", handlePageShow);
+
+    return () => {
+      window.removeEventListener("pageshow", handlePageShow);
+      window.cancelAnimationFrame(rafId);
+    };
+  }, []);
 
   useEffect(() => {
     const id = window.requestAnimationFrame(() => setIsLandingReady(true));
@@ -311,6 +341,43 @@ export default function Home() {
       if (rafId) window.cancelAnimationFrame(rafId);
     };
   }, [hasEnteredJourney]);
+
+  useEffect(() => {
+    if (pageFlow !== "journey") {
+      setIsTimelineAtEnd(false);
+      return;
+    }
+
+    const timelinePanel = document.querySelector<HTMLElement>(".timeline-panel");
+    if (!timelinePanel) {
+      setIsTimelineAtEnd(false);
+      return;
+    }
+
+    let rafId = 0;
+
+    const updateTimelineEndState = () => {
+      rafId = 0;
+      const maxScrollTop = timelinePanel.scrollHeight - timelinePanel.clientHeight;
+      const atEnd = maxScrollTop <= 2 || timelinePanel.scrollTop >= maxScrollTop - 8;
+      setIsTimelineAtEnd((current) => (current === atEnd ? current : atEnd));
+    };
+
+    const requestUpdate = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(updateTimelineEndState);
+    };
+
+    timelinePanel.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+    requestUpdate();
+
+    return () => {
+      timelinePanel.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+      if (rafId) window.cancelAnimationFrame(rafId);
+    };
+  }, [pageFlow]);
 
   useEffect(() => {
     if (!hasEnteredJourney) return;
@@ -454,6 +521,11 @@ export default function Home() {
               global perspective on finance and policy.
             </p>
           </div>
+          <div
+            className="about-photo-panel"
+            style={{ backgroundImage: `url("${aboutPhotoUrl}")` }}
+            aria-hidden="true"
+          />
           <div className="landing-swipe-hint about-swipe-hint" aria-hidden="true">
             <span>Scroll Down</span>
             <div className="swipe-chevrons">
@@ -551,7 +623,9 @@ export default function Home() {
       </div>
       <section
         className={`credentials-screen mobile-credentials-screen ${
-          pageFlow === "journey" && activeStage.id === "whats-next" ? "visible" : ""
+          pageFlow === "journey" && activeStage.id === "whats-next" && isTimelineAtEnd
+            ? "visible"
+            : ""
         }`}
         aria-label="Connect and credentials"
       >

@@ -165,6 +165,12 @@ body {
 
 .about-menu-layout {
   width: min(100%, 34rem);
+  position: relative;
+  z-index: 2;
+}
+
+.about-photo-panel {
+  display: none;
 }
 
 .about-menu-heading {
@@ -381,10 +387,11 @@ body {
   }
 
   .about-swipe-hint {
-    position: static;
-    transform: none;
-    margin-top: auto;
-    align-self: center;
+    position: absolute;
+    left: 50%;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 0.9rem);
+    transform: translateX(-50%);
+    margin: 0;
     justify-items: center;
     color: #000;
   }
@@ -454,6 +461,15 @@ body {
 .landing-swipe-hint .swipe-chevrons i:nth-child(2),
 .landing-swipe-hint .swipe-chevrons i:nth-child(3) {
   display: none;
+}
+
+.landing-swipe-hint.about-swipe-hint {
+  color: #000;
+}
+
+.landing-swipe-hint.about-swipe-hint .swipe-chevrons i {
+  border-right-color: #000;
+  border-bottom-color: #000;
 }
 
 .swipe-chevrons {
@@ -1249,6 +1265,49 @@ li {
 }
 
 @media (min-width: 1100px) {
+  .about-hero {
+    overflow: hidden;
+  }
+
+  .about-menu-layout {
+    width: min(44vw, 34rem);
+  }
+
+  .about-photo-panel {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50vw;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1;
+  }
+
+  .about-photo-panel::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: clamp(3.2rem, 8vw, 7.5rem);
+    background: linear-gradient(
+      90deg,
+      var(--bg) 0%,
+      rgba(245, 247, 250, 0.86) 38%,
+      rgba(245, 247, 250, 0.36) 72%,
+      rgba(245, 247, 250, 0) 100%
+    );
+    pointer-events: none;
+  }
+
+  .about-swipe-hint {
+    left: 25%;
+  }
+
   .mobile-credentials-screen {
     display: none !important;
   }
