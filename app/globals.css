@@ -637,7 +637,7 @@ li {
   .mobile-stage-status {
     display: block;
     position: fixed;
-    top: 0.7rem;
+    top: 0.55rem;
     left: 0.7rem;
     z-index: 6;
     max-width: min(74vw, 280px);
