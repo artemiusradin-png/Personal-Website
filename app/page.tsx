@@ -15,6 +15,9 @@ type JourneyStage = {
   title: string;
   summary: string;
   highlights: string[];
+  link?: { href: string; label: string };
+  /** Filename in /public, shown on the map next to the active pin */
+  mapImage?: string;
 };
 
 const JourneyVisual = dynamic(() => import("@/components/JourneyVisual"), {
@@ -38,7 +41,7 @@ const stages: JourneyStage[] = [
       "Core curriculum in mathematics, physics, and economics",
       "Early interest in international finance and capital markets",
       "Competitive entrance to specialized lyceum program",
-      "Multilingual development (Ukrainian, English)",
+      "Multilingual development (Ukrainian, English, Russian)",
     ],
   },
   {
@@ -117,6 +120,45 @@ const stages: JourneyStage[] = [
       "Policy analysis on economic and financial topics",
       "Exposure to legislative process and regulatory frameworks",
     ],
+    mapImage: "IMG_2803.jpg",
+  },
+  {
+    id: "2024-irvg",
+    navLabel: "2024 • IRVG",
+    year: "2024",
+    city: "Kyiv",
+    country: "Ukraine",
+    lat: 50.4501,
+    lng: 30.5234,
+    zoom: 6,
+    title: "Founded IRVG",
+    summary:
+      "Co-founded IRVG, connecting architecture, reconstruction, and international development. The site documents the team, approach, and active project lines—ranging from Ukraine to the Middle East.",
+    highlights: [
+      "Built IRVG as a vehicle for architectural and development-oriented work",
+      "Cross-border collaboration on post-conflict reconstruction and new-build programs",
+      "Portfolio and narrative details published on the IRVG website",
+    ],
+    link: { href: "https://inter-vg.com/", label: "inter-vg.com" },
+  },
+  {
+    id: "2024-irvg-projects",
+    navLabel: "2024 • IRVG projects",
+    year: "2024",
+    city: "Kharkiv",
+    country: "Ukraine",
+    lat: 49.9935,
+    lng: 36.2304,
+    zoom: 7,
+    title: "IRVG flagship concepts",
+    summary:
+      "Through IRVG, advanced two parallel concept tracks: recovery-oriented housing in Ukraine and a school program in the Middle East. Scope, visuals, and background are expanded on the IRVG site.",
+    highlights: [
+      "Architectural concepts for reconstruction of a residential building in Kharkiv",
+      "Design and planning work toward a new school in the Middle East",
+      "Further documentation, imagery, and storytelling at inter-vg.com",
+    ],
+    link: { href: "https://inter-vg.com/", label: "inter-vg.com" },
   },
   {
     id: "2025-warsaw",
@@ -137,6 +179,7 @@ const stages: JourneyStage[] = [
       "Contributed to cross-border financing workflows and coordination",
       "Improved data checks and reporting processes for deal and portfolio monitoring",
     ],
+    mapImage: "IMG_8128-2.jpg",
   },
   {
     id: "2026-toronto",
@@ -157,6 +200,7 @@ const stages: JourneyStage[] = [
       "Presented recommendations under tight competition timelines",
       "Competed with students representing universities across Canada",
     ],
+    mapImage: "IMG_2804.jpg",
   },
   {
     id: "2026-hong-kong",
@@ -599,7 +643,11 @@ export default function Home() {
         className={`journey-page ${pageFlow === "journey" ? "entered-from-landing" : "is-hidden-before-entry"}`}
       >
         <div className="map-background" aria-hidden="true">
-          <JourneyVisual stage={activeStage} allStages={stages} />
+          <JourneyVisual
+            stage={activeStage}
+            allStages={stages}
+            assetBasePath={basePath}
+          />
         </div>
         <div className="map-background-overlay" aria-hidden="true" />
         <div className="journey-shell">
@@ -658,6 +706,18 @@ export default function Home() {
                   {stage.city}, {stage.country}
                 </p>
                 <p>{stage.summary}</p>
+                {stage.link ? (
+                  <p>
+                    <a
+                      className="stage-external-link"
+                      href={stage.link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {stage.link.label}
+                    </a>
+                  </p>
+                ) : null}
                 <ul>
                   {stage.highlights.map((point) => (
                     <li key={point}>{point}</li>

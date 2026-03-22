@@ -21,12 +21,21 @@ type JourneyStage = {
   lat: number;
   lng: number;
   zoom: number;
+  mapImage?: string;
 };
 
 type JourneyVisualProps = {
   stage: JourneyStage;
   allStages: JourneyStage[];
+  assetBasePath: string;
 };
+
+function mapAssetSrc(assetBasePath: string, filename: string) {
+  if (assetBasePath) {
+    return `${assetBasePath.replace(/\/$/, "")}/${filename}`;
+  }
+  return `/${filename}`;
+}
 
 type ViewState = {
   center: [number, number];
@@ -56,7 +65,11 @@ const isEuropeCorridor = (center: [number, number]) => {
   return lat >= 44 && lat <= 56 && lng >= 5 && lng <= 33;
 };
 
-export default function JourneyVisual({ stage, allStages }: JourneyVisualProps) {
+export default function JourneyVisual({
+  stage,
+  allStages,
+  assetBasePath,
+}: JourneyVisualProps) {
   const isWorldStage = stage.id === "whats-next";
   const [isDesktop, setIsDesktop] = useState(false);
   const isWorldStageRef = useRef(isWorldStage);
@@ -365,6 +378,34 @@ export default function JourneyVisual({ stage, allStages }: JourneyVisualProps) 
           {!isWorldStage && (
             <Marker coordinates={stageCenter}>
               <g className="focus-marker">
+                {stage.mapImage ? (
+                  <g transform="translate(11, -34)" className="map-focus-photo">
+                    <defs>
+                      <clipPath id={`map-focus-photo-${stage.id}`}>
+                        <rect x="0" y="0" width="28" height="28" rx="6" />
+                      </clipPath>
+                    </defs>
+                    <rect
+                      x="-1"
+                      y="-1"
+                      width="30"
+                      height="30"
+                      rx="7"
+                      fill="#fff"
+                      stroke="#1a1a1a"
+                      strokeWidth={1.2}
+                    />
+                    <image
+                      href={mapAssetSrc(assetBasePath, stage.mapImage)}
+                      x="0"
+                      y="0"
+                      width="28"
+                      height="28"
+                      preserveAspectRatio="xMidYMid slice"
+                      clipPath={`url(#map-focus-photo-${stage.id})`}
+                    />
+                  </g>
+                ) : null}
                 <circle r={4.2} fill="#fff" stroke="#1a1a1a" strokeWidth={1.4} />
                 <circle
                   r={6.8}

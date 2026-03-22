@@ -913,6 +913,17 @@ li {
   font-size: 1.1em;
 }
 
+.stage-card .stage-external-link {
+  color: #0a2540;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.stage-card .stage-external-link:hover {
+  color: #000;
+}
+
 .final-landing-page {
   min-height: 82vh;
   background: #07090c;
