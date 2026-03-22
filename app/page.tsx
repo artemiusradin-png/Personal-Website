@@ -220,6 +220,7 @@ const stages: JourneyStage[] = [
       "Joined Institute of Economic Strategy (Ukraine)",
       "Asia-Pacific finance and markets exposure",
     ],
+    mapImage: "IMG_0325.jpg",
   },
   {
     id: "2026-2027-research",
@@ -239,6 +240,7 @@ const stages: JourneyStage[] = [
       "Correlation and association methodology",
       "Scientific paper in progress",
     ],
+    mapImage: "research-redistribution-screenshot.png",
   },
   {
     id: "whats-next",
