@@ -88,7 +88,7 @@ const stages: JourneyStage[] = [
       "Built Excel models for budgeting and forecasting",
       "Exposure to German business culture and corporate finance",
     ],
-    mapImage: "IMG_8826.jpg",
+    mapImage: "IMG_8826.HEIC.png",
   },
   {
     id: "2023-vancouver",
