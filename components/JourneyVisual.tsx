@@ -55,6 +55,7 @@ const IRVG_HIGHLIGHT_COUNTRIES = new Set([
   "United Kingdom",
 ]);
 const CRIMEA_FEATURE = {
+  rsmKey: "crimea-highlight",
   type: "Feature",
   properties: { name: "Crimea" },
   geometry: {
