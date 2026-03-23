@@ -50,6 +50,8 @@ const IRVG_HIGHLIGHT_COUNTRIES = new Set([
   "New Zealand",
   "United States of America",
   "Ukraine",
+  // Some map atlases model Crimea as a separate region; treat it as Ukraine for IRVG highlights.
+  "Crimea",
   "Germany",
   "India",
   "Indonesia",
@@ -451,7 +453,7 @@ export default function JourneyVisual({
                   <g transform="translate(-34, -46)" className="map-focus-photo">
                     <defs>
                       <clipPath id={`map-focus-photo-${stage.id}`}>
-                        <rect x="0" y="0" width="68" height="92" rx="12" />
+                        <rect x="0" y="0" width="68" height="92" rx="6" />
                       </clipPath>
                       <radialGradient id={`map-focus-photo-fade-${stage.id}`} cx="50%" cy="50%" r="72%">
                         <stop offset="0%" stopColor="white" stopOpacity="1" />
@@ -464,7 +466,7 @@ export default function JourneyVisual({
                           y="0"
                           width="68"
                           height="92"
-                          rx="12"
+                          rx="6"
                           fill={`url(#map-focus-photo-fade-${stage.id})`}
                         />
                       </mask>
@@ -543,7 +545,7 @@ export default function JourneyVisual({
                           y="0"
                           width={isPortraitFocusPhoto ? 31 : 40}
                           height={isPortraitFocusPhoto ? 44 : 31}
-                          rx={isPortraitFocusPhoto ? 9 : 10}
+                          rx={isPortraitFocusPhoto ? 5 : 6}
                         />
                       </clipPath>
                       <radialGradient id={`map-focus-photo-fade-${stage.id}`} cx="50%" cy="50%" r="72%">
@@ -557,7 +559,7 @@ export default function JourneyVisual({
                           y="0"
                           width={isPortraitFocusPhoto ? 31 : 40}
                           height={isPortraitFocusPhoto ? 44 : 31}
-                          rx={isPortraitFocusPhoto ? 9 : 10}
+                          rx={isPortraitFocusPhoto ? 5 : 6}
                           fill={`url(#map-focus-photo-fade-${stage.id})`}
                         />
                       </mask>

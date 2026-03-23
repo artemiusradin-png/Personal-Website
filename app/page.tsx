@@ -88,6 +88,7 @@ const stages: JourneyStage[] = [
       "Built Excel models for budgeting and forecasting",
       "Exposure to German business culture and corporate finance",
     ],
+    mapImage: "IMG_8826.jpg",
   },
   {
     id: "2023-vancouver",
@@ -249,7 +250,7 @@ const stages: JourneyStage[] = [
       "Correlation and association methodology",
       "Scientific paper in progress",
     ],
-    mapImage: "research-redistribution-screenshot.png",
+    mapImage: "hong-kong-research-screenshot.png",
   },
   {
     id: "whats-next",
