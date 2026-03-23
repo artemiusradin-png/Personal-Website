@@ -64,20 +64,24 @@ const CRIMEA_FEATURE = {
   geometry: {
     type: "Polygon",
     coordinates: [[
-      [32.48, 45.23],
-      [33.35, 45.16],
-      [34.1, 45.26],
-      [35.15, 45.48],
-      [36.02, 45.76],
-      [36.46, 45.97],
-      [36.34, 46.28],
-      [35.93, 46.58],
-      [35.26, 46.79],
-      [34.45, 46.76],
-      [33.73, 46.54],
-      [33.18, 46.25],
-      [32.76, 45.89],
-      [32.48, 45.23],
+      [32.52, 45.2],
+      [33.02, 45.11],
+      [33.62, 45.15],
+      [34.18, 45.22],
+      [34.78, 45.34],
+      [35.36, 45.5],
+      [35.92, 45.72],
+      [36.34, 45.94],
+      [36.58, 46.13],
+      [36.41, 46.34],
+      [36.02, 46.55],
+      [35.47, 46.72],
+      [34.85, 46.77],
+      [34.17, 46.74],
+      [33.56, 46.61],
+      [33.02, 46.4],
+      [32.66, 46.12],
+      [32.52, 45.2],
     ]],
   },
 } as const;
@@ -110,6 +114,7 @@ export default function JourneyVisual({
 }: JourneyVisualProps) {
   const isWorldStage = stage.id === "whats-next";
   const isIrvgStage = IRVG_STAGE_IDS.has(stage.id);
+  const isPortraitFocusPhoto = stage.id === "2025-warsaw";
   const [isDesktop, setIsDesktop] = useState(false);
   const isWorldStageRef = useRef(isWorldStage);
   const worldPanActiveRef = useRef(false);
@@ -421,37 +426,26 @@ export default function JourneyVisual({
             <>
               <Geography
                 geography={CRIMEA_FEATURE}
+                fill="rgba(0, 0, 0, 0)"
+                stroke="rgba(19, 63, 108, 0.22)"
+                strokeWidth={2.1}
+                style={{
+                  default: { outline: "none" },
+                  hover: { outline: "none" },
+                  pressed: { outline: "none" },
+                }}
+              />
+              <Geography
+                geography={CRIMEA_FEATURE}
                 fill="rgba(19, 63, 108, 0.88)"
                 stroke="rgba(255, 248, 238, 0.98)"
-                strokeWidth={1.2}
+                strokeWidth={1}
                 style={{
                   default: { outline: "none" },
                   hover: { outline: "none", fill: "rgba(197, 141, 77, 0.9)" },
                   pressed: { outline: "none" },
                 }}
               />
-              <Marker coordinates={[34.2, 45.3]}>
-                <g transform="rotate(-12)">
-                  <ellipse
-                    cx="0"
-                    cy="0"
-                    rx="8.5"
-                    ry="4.6"
-                    fill="rgba(19, 63, 108, 0.9)"
-                    stroke="rgba(255, 248, 238, 0.98)"
-                    strokeWidth="1.2"
-                  />
-                  <ellipse
-                    cx="0"
-                    cy="0"
-                    rx="11"
-                    ry="6"
-                    fill="none"
-                    stroke="rgba(19, 63, 108, 0.22)"
-                    strokeWidth="2"
-                  />
-                </g>
-              </Marker>
               {stage.mapImage ? (
                 <Marker coordinates={[76, -8]}>
                   <g transform="translate(-34, -46)" className="map-focus-photo">
@@ -536,10 +530,21 @@ export default function JourneyVisual({
             <Marker coordinates={stageCenter}>
               <g className="focus-marker">
                 {stage.mapImage ? (
-                  <g transform="translate(10, -48)" className="map-focus-photo">
+                  <g
+                    transform={
+                      isPortraitFocusPhoto ? "translate(10, -58)" : "translate(10, -48)"
+                    }
+                    className="map-focus-photo"
+                  >
                     <defs>
                       <clipPath id={`map-focus-photo-${stage.id}`}>
-                        <rect x="0" y="0" width="40" height="31" rx="10" />
+                        <rect
+                          x="0"
+                          y="0"
+                          width={isPortraitFocusPhoto ? 31 : 40}
+                          height={isPortraitFocusPhoto ? 44 : 31}
+                          rx={isPortraitFocusPhoto ? 9 : 10}
+                        />
                       </clipPath>
                       <radialGradient id={`map-focus-photo-fade-${stage.id}`} cx="50%" cy="50%" r="72%">
                         <stop offset="0%" stopColor="white" stopOpacity="1" />
@@ -550,18 +555,18 @@ export default function JourneyVisual({
                         <rect
                           x="0"
                           y="0"
-                          width="40"
-                          height="31"
-                          rx="10"
+                          width={isPortraitFocusPhoto ? 31 : 40}
+                          height={isPortraitFocusPhoto ? 44 : 31}
+                          rx={isPortraitFocusPhoto ? 9 : 10}
                           fill={`url(#map-focus-photo-fade-${stage.id})`}
                         />
                       </mask>
                     </defs>
                     <ellipse
-                      cx="20"
-                      cy="15.5"
-                      rx="18"
-                      ry="14"
+                      cx={isPortraitFocusPhoto ? 15.5 : 20}
+                      cy={isPortraitFocusPhoto ? 22 : 15.5}
+                      rx={isPortraitFocusPhoto ? 14 : 18}
+                      ry={isPortraitFocusPhoto ? 20 : 14}
                       fill="rgba(19, 63, 108, 0.16)"
                       filter="blur(4px)"
                     />
@@ -569,8 +574,8 @@ export default function JourneyVisual({
                       href={mapAssetSrc(assetBasePath, stage.mapImage)}
                       x="0"
                       y="0"
-                      width="40"
-                      height="31"
+                      width={isPortraitFocusPhoto ? 31 : 40}
+                      height={isPortraitFocusPhoto ? 44 : 31}
                       preserveAspectRatio="xMidYMid slice"
                       clipPath={`url(#map-focus-photo-${stage.id})`}
                       mask={`url(#map-focus-photo-mask-${stage.id})`}
