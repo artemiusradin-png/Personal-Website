@@ -428,19 +428,8 @@ export default function JourneyVisual({
             <>
               <Geography
                 geography={CRIMEA_FEATURE}
-                fill="rgba(0, 0, 0, 0)"
-                stroke="rgba(19, 63, 108, 0.22)"
-                strokeWidth={2.1}
-                style={{
-                  default: { outline: "none" },
-                  hover: { outline: "none" },
-                  pressed: { outline: "none" },
-                }}
-              />
-              <Geography
-                geography={CRIMEA_FEATURE}
-                fill="rgba(19, 63, 108, 0.88)"
-                stroke="rgba(255, 248, 238, 0.98)"
+                fill="rgba(19, 63, 108, 0.78)"
+                stroke="rgba(255, 248, 238, 0.95)"
                 strokeWidth={1}
                 style={{
                   default: { outline: "none" },
