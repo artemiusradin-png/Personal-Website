@@ -496,7 +496,11 @@ export default function Home() {
         className={`journey-page ${pageFlow === "journey" ? "entered-from-landing" : "is-hidden-before-entry"}`}
       >
         <div className="map-background" aria-hidden="true">
-          <JourneyVisual stage={activeStage} allStages={stages} />
+          <JourneyVisual
+            stage={activeStage}
+            allStages={stages}
+            assetBasePath={basePath}
+          />
         </div>
         <div className="map-background-overlay" aria-hidden="true" />
         <div className="journey-shell">
