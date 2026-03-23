@@ -44,6 +44,7 @@ type ViewState = {
 
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 const IRVG_STAGE_IDS = new Set(["2024-irvg", "2024-irvg-projects"]);
+const HIDDEN_ROUTE_STAGE_IDS = new Set(["2024-irvg-projects"]);
 const IRVG_HIGHLIGHT_COUNTRIES = new Set([
   "Canada",
   "New Zealand",
@@ -133,7 +134,10 @@ export default function JourneyVisual({
   }, [isWorldStage]);
 
   const routeCoords = useMemo(
-    () => allStages.map((item) => [item.lng, item.lat] as [number, number]),
+    () =>
+      allStages
+        .filter((item) => !HIDDEN_ROUTE_STAGE_IDS.has(item.id))
+        .map((item) => [item.lng, item.lat] as [number, number]),
     [allStages],
   );
   const activeStageIndex = useMemo(
@@ -448,6 +452,51 @@ export default function JourneyVisual({
                   />
                 </g>
               </Marker>
+              {stage.mapImage ? (
+                <Marker coordinates={[76, -8]}>
+                  <g transform="translate(-34, -46)" className="map-focus-photo">
+                    <defs>
+                      <clipPath id={`map-focus-photo-${stage.id}`}>
+                        <rect x="0" y="0" width="68" height="92" rx="12" />
+                      </clipPath>
+                      <radialGradient id={`map-focus-photo-fade-${stage.id}`} cx="50%" cy="50%" r="72%">
+                        <stop offset="0%" stopColor="white" stopOpacity="1" />
+                        <stop offset="68%" stopColor="white" stopOpacity="0.94" />
+                        <stop offset="100%" stopColor="white" stopOpacity="0" />
+                      </radialGradient>
+                      <mask id={`map-focus-photo-mask-${stage.id}`}>
+                        <rect
+                          x="0"
+                          y="0"
+                          width="68"
+                          height="92"
+                          rx="12"
+                          fill={`url(#map-focus-photo-fade-${stage.id})`}
+                        />
+                      </mask>
+                    </defs>
+                    <ellipse
+                      cx="34"
+                      cy="46"
+                      rx="30"
+                      ry="40"
+                      fill="rgba(19, 63, 108, 0.14)"
+                      filter="blur(7px)"
+                    />
+                    <image
+                      href={mapAssetSrc(assetBasePath, stage.mapImage)}
+                      x="0"
+                      y="0"
+                      width="68"
+                      height="92"
+                      preserveAspectRatio="xMidYMid slice"
+                      clipPath={`url(#map-focus-photo-${stage.id})`}
+                      mask={`url(#map-focus-photo-mask-${stage.id})`}
+                      opacity="0.98"
+                    />
+                  </g>
+                </Marker>
+              ) : null}
             </>
           )}
 
@@ -459,7 +508,9 @@ export default function JourneyVisual({
             />
           )}
 
-          {!isIrvgStage && allStages.map((item, index) => {
+          {!isIrvgStage && allStages
+            .filter((item) => !HIDDEN_ROUTE_STAGE_IDS.has(item.id))
+            .map((item, index) => {
             if (item.id === "whats-next") return null;
             const isActive = item.id === stage.id;
             const isVisited = activeStageIndex >= 0 && index < activeStageIndex;

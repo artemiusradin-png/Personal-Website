@@ -107,6 +107,7 @@ const stages: JourneyStage[] = [
       "Core courses in corporate finance, investments, and financial modeling",
       "Participation in case competitions and industry events",
     ],
+    mapImage: "IMG_8436.jpg",
   },
   {
     id: "2024-berlin",
@@ -145,6 +146,7 @@ const stages: JourneyStage[] = [
       "Cross-border collaboration on post-conflict reconstruction and new-build programs",
       "Portfolio and narrative details published on the IRVG website",
     ],
+    mapImage: "sanare-haven-kharkiv-page.png",
     link: { href: "https://inter-vg.com/", label: "inter-vg.com" },
   },
   {
@@ -164,6 +166,7 @@ const stages: JourneyStage[] = [
       "Design and planning work toward a new school in the Middle East",
       "Further documentation, imagery, and storytelling at inter-vg.com",
     ],
+    mapImage: "sanare-haven-kharkiv-page.png",
     link: { href: "https://inter-vg.com/", label: "inter-vg.com" },
   },
   {
