@@ -24,6 +24,12 @@ const JourneyVisual = dynamic(() => import("@/components/JourneyVisual"), {
   ssr: false,
 });
 
+const IRVG_STAGE_IDS = ["2024-irvg", "2024-irvg-projects"] as const;
+
+const isIrvgStageId = (stageId: string) => IRVG_STAGE_IDS.includes(
+  stageId as (typeof IRVG_STAGE_IDS)[number],
+);
+
 const stages: JourneyStage[] = [
   {
     id: "2016-kyiv",
@@ -504,6 +510,20 @@ export default function Home() {
     () => stages.find((stage) => stage.id === activeStageId) ?? stages[0],
     [activeStageId],
   );
+  const mergedIrvgCard = useMemo(() => {
+    const foundedStage = stages.find((stage) => stage.id === "2024-irvg");
+    const projectsStage = stages.find((stage) => stage.id === "2024-irvg-projects");
+
+    if (!foundedStage || !projectsStage) return null;
+
+    return {
+      id: "2024-irvg",
+      year: "2024",
+      sections: [foundedStage, projectsStage],
+      link: foundedStage.link,
+      highlights: [...foundedStage.highlights, ...projectsStage.highlights],
+    };
+  }, []);
 
   const jumpToAbout = () => {
     if (jumpLockRef.current || pageFlow !== "landing" || isLeavingLanding) return;
@@ -669,11 +689,17 @@ export default function Home() {
               {stages.map((stage) => (
                 <a
                   key={stage.id}
-                  href={`#stage-${stage.id}`}
-                  className={`year-link ${activeStageId === stage.id ? "active" : ""} ${
-                    activeStageId === stage.id &&
+                  href={isIrvgStageId(stage.id) ? "#stage-2024-irvg" : `#stage-${stage.id}`}
+                  className={`year-link ${
+                    (isIrvgStageId(stage.id) && isIrvgStageId(activeStageId)) ||
+                    activeStageId === stage.id
+                      ? "active"
+                      : ""
+                  } ${
+                    (((isIrvgStageId(stage.id) && isIrvgStageId(activeStageId)) ||
+                    activeStageId === stage.id) &&
                     stage.city !== "Kyiv" &&
-                    stage.country !== "Canada"
+                    stage.country !== "Canada")
                       ? "active-shift-left"
                       : ""
                   }`}
@@ -695,38 +721,84 @@ export default function Home() {
           </section>
 
           <main className="timeline-panel">
-            {stages.map((stage) => (
-              <article
-                key={stage.id}
-                id={`stage-${stage.id}`}
-                data-stage-id={stage.id}
-                className="stage-card"
-              >
-                <p className="label">{stage.year}</p>
-                <h3>{stage.title}</h3>
-                <p className="location">
-                  {stage.city}, {stage.country}
-                </p>
-                <p>{stage.summary}</p>
-                {stage.link ? (
-                  <p>
-                    <a
-                      className="stage-external-link"
-                      href={stage.link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {stage.link.label}
-                    </a>
+            {stages.map((stage) => {
+              if (stage.id === "2024-irvg-projects") return null;
+
+              if (stage.id === "2024-irvg" && mergedIrvgCard) {
+                return (
+                  <article
+                    key={mergedIrvgCard.id}
+                    id={`stage-${mergedIrvgCard.id}`}
+                    data-stage-id={mergedIrvgCard.id}
+                    className="stage-card"
+                  >
+                    {mergedIrvgCard.sections.map((section, index) => (
+                      <div
+                        key={section.id}
+                        className={index === 0 ? "stage-card-section" : "stage-card-section stage-card-section-split"}
+                      >
+                        <p className="label">{index === 0 ? mergedIrvgCard.year : section.year}</p>
+                        <h3>{section.title}</h3>
+                        <p className="location">
+                          {section.city}, {section.country}
+                        </p>
+                        <p>{section.summary}</p>
+                        {section.link ? (
+                          <p>
+                            <a
+                              className="stage-external-link"
+                              href={section.link.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {section.link.label}
+                            </a>
+                          </p>
+                        ) : null}
+                        <ul>
+                          {section.highlights.map((point) => (
+                            <li key={point}>{point}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </article>
+                );
+              }
+
+              return (
+                <article
+                  key={stage.id}
+                  id={`stage-${stage.id}`}
+                  data-stage-id={stage.id}
+                  className="stage-card"
+                >
+                  <p className="label">{stage.year}</p>
+                  <h3>{stage.title}</h3>
+                  <p className="location">
+                    {stage.city}, {stage.country}
                   </p>
-                ) : null}
-                <ul>
-                  {stage.highlights.map((point) => (
-                    <li key={point}>{point}</li>
-                  ))}
-                </ul>
-              </article>
-            ))}
+                  <p>{stage.summary}</p>
+                  {stage.link ? (
+                    <p>
+                      <a
+                        className="stage-external-link"
+                        href={stage.link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {stage.link.label}
+                      </a>
+                    </p>
+                  ) : null}
+                  <ul>
+                    {stage.highlights.map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
+                </article>
+              );
+            })}
             <section className="final-landing-page" aria-label="Connect and credentials">
               <p className="final-page-kicker">CONNECT</p>
               <h2>Credentials</h2>
