@@ -43,6 +43,17 @@ type ViewState = {
 };
 
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+const IRVG_STAGE_IDS = new Set(["2024-irvg", "2024-irvg-projects"]);
+const IRVG_HIGHLIGHT_COUNTRIES = new Set([
+  "Canada",
+  "New Zealand",
+  "United States of America",
+  "Ukraine",
+  "Germany",
+  "India",
+  "Indonesia",
+  "United Kingdom",
+]);
 
 const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
@@ -71,6 +82,7 @@ export default function JourneyVisual({
   assetBasePath,
 }: JourneyVisualProps) {
   const isWorldStage = stage.id === "whats-next";
+  const isIrvgStage = IRVG_STAGE_IDS.has(stage.id);
   const [isDesktop, setIsDesktop] = useState(false);
   const isWorldStageRef = useRef(isWorldStage);
   const worldPanActiveRef = useRef(false);
@@ -110,27 +122,34 @@ export default function JourneyVisual({
         ? 1.15
         : stage.country === "Canada"
           ? 0.45
-        : 0;
+          : 0;
   const desktopCanadaZoomOffset =
-    isDesktop && stage.country === "Canada" && !isWorldStage ? 0.9 : 0;
+    isDesktop && stage.country === "Canada" && !isWorldStage && !isIrvgStage ? 0.9 : 0;
   const targetZoom = isWorldStage
     ? 1.05
-    : clamp(stage.zoom - 4 - locationZoomOffset - desktopCanadaZoomOffset, 1.8, 4);
+    : isIrvgStage
+      ? 1.55
+      : clamp(stage.zoom - 4 - locationZoomOffset - desktopCanadaZoomOffset, 1.8, 4);
   const desktopCanadaLngShift =
-    isDesktop && !isWorldStage
+    isDesktop && !isWorldStage && !isIrvgStage
       ? stage.city === "Vancouver"
-      ? 14
-      : stage.country === "Canada"
-        ? -12
-        : 0
+        ? 14
+        : stage.country === "Canada"
+          ? -12
+          : 0
       : 0;
   const stageCenter = useMemo(
     () => [stage.lng, stage.lat] as [number, number],
     [stage.lng, stage.lat],
   );
   const targetCenter = useMemo(
-    () => (isWorldStage ? ([0, 15] as [number, number]) : ([stage.lng + desktopCanadaLngShift, stage.lat] as [number, number])),
-    [desktopCanadaLngShift, isWorldStage, stage.lng, stage.lat],
+    () =>
+      isWorldStage
+        ? ([0, 15] as [number, number])
+        : isIrvgStage
+          ? ([18, 24] as [number, number])
+          : ([stage.lng + desktopCanadaLngShift, stage.lat] as [number, number]),
+    [desktopCanadaLngShift, isIrvgStage, isWorldStage, stage.lng, stage.lat],
   );
 
   const [view, setView] = useState<ViewState>({
@@ -328,24 +347,45 @@ export default function JourneyVisual({
 
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
-              geographies.map((geo) => (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  fill="rgba(120, 120, 120, 0.5)"
-                  stroke="rgba(0, 0, 0, 0.35)"
-                  strokeWidth={0.6}
-                  style={{
-                    default: { outline: "none" },
-                    hover: { outline: "none", fill: "rgba(140, 140, 140, 0.6)" },
-                    pressed: { outline: "none" },
-                  }}
-                />
-              ))
+              geographies.map((geo) => {
+                const countryName = geo.properties.name as string | undefined;
+                const isIrvgHighlight =
+                  isIrvgStage &&
+                  countryName != null &&
+                  IRVG_HIGHLIGHT_COUNTRIES.has(countryName);
+
+                return (
+                  <Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                    fill={
+                      isIrvgHighlight
+                        ? "rgba(19, 63, 108, 0.78)"
+                        : "rgba(120, 120, 120, 0.5)"
+                    }
+                    stroke={
+                      isIrvgHighlight
+                        ? "rgba(255, 248, 238, 0.95)"
+                        : "rgba(0, 0, 0, 0.35)"
+                    }
+                    strokeWidth={isIrvgHighlight ? 1 : 0.6}
+                    style={{
+                      default: { outline: "none" },
+                      hover: {
+                        outline: "none",
+                        fill: isIrvgHighlight
+                          ? "rgba(197, 141, 77, 0.9)"
+                          : "rgba(140, 140, 140, 0.6)",
+                      },
+                      pressed: { outline: "none" },
+                    }}
+                  />
+                );
+              })
             }
           </Geographies>
 
-          {!isWorldStage && (
+          {!isWorldStage && !isIrvgStage && (
             <Line
               coordinates={routeCoords}
               fill="none"
@@ -353,7 +393,7 @@ export default function JourneyVisual({
             />
           )}
 
-          {allStages.map((item, index) => {
+          {!isIrvgStage && allStages.map((item, index) => {
             if (item.id === "whats-next") return null;
             const isActive = item.id === stage.id;
             const isVisited = activeStageIndex >= 0 && index < activeStageIndex;
@@ -375,34 +415,60 @@ export default function JourneyVisual({
             );
           })}
 
-          {!isWorldStage && (
+          {!isWorldStage && !isIrvgStage && (
             <Marker coordinates={stageCenter}>
               <g className="focus-marker">
                 {stage.mapImage ? (
-                  <g transform="translate(11, -34)" className="map-focus-photo">
+                  <g transform="translate(10, -42)" className="map-focus-photo">
                     <defs>
                       <clipPath id={`map-focus-photo-${stage.id}`}>
-                        <rect x="0" y="0" width="28" height="28" rx="6" />
+                        <circle cx="16" cy="16" r="12.5" />
                       </clipPath>
                     </defs>
                     <rect
-                      x="-1"
-                      y="-1"
-                      width="30"
-                      height="30"
-                      rx="7"
-                      fill="#fff"
-                      stroke="#1a1a1a"
-                      strokeWidth={1.2}
+                      x="0"
+                      y="7"
+                      width="32"
+                      height="32"
+                      rx="12"
+                      fill="rgba(19, 63, 108, 0.16)"
+                      transform="rotate(-12 16 23)"
+                    />
+                    <line
+                      x1="16"
+                      y1="28"
+                      x2="-2"
+                      y2="44"
+                      stroke="#133f6c"
+                      strokeWidth="1.7"
+                      strokeLinecap="round"
+                    />
+                    <rect
+                      x="3"
+                      y="3"
+                      width="26"
+                      height="26"
+                      rx="13"
+                      fill="#f4efe7"
+                      stroke="#133f6c"
+                      strokeWidth={1.4}
                     />
                     <image
                       href={mapAssetSrc(assetBasePath, stage.mapImage)}
-                      x="0"
-                      y="0"
-                      width="28"
-                      height="28"
+                      x="3.5"
+                      y="3.5"
+                      width="25"
+                      height="25"
                       preserveAspectRatio="xMidYMid slice"
                       clipPath={`url(#map-focus-photo-${stage.id})`}
+                    />
+                    <circle
+                      cx="16"
+                      cy="16"
+                      r="13.6"
+                      fill="none"
+                      stroke="#fff"
+                      strokeWidth="1.4"
                     />
                   </g>
                 ) : null}
