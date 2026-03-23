@@ -59,6 +59,32 @@ const IRVG_HIGHLIGHT_COUNTRIES = new Set([
   "South Africa",
   "United Kingdom",
 ]);
+const IRVG_PROJECT_PREVIEWS = [
+  {
+    id: "irvg-ukraine",
+    coordinates: [31, 49] as [number, number],
+    image: "irvg-ukraine-page.png",
+    width: 52,
+    height: 72,
+    translate: [-26, -82] as [number, number],
+  },
+  {
+    id: "irvg-israel",
+    coordinates: [35.1, 31.2] as [number, number],
+    image: "irvg-israel-page.png",
+    width: 50,
+    height: 68,
+    translate: [10, -72] as [number, number],
+  },
+  {
+    id: "irvg-germany",
+    coordinates: [10.5, 51.1] as [number, number],
+    image: "irvg-germany-page.png",
+    width: 50,
+    height: 68,
+    translate: [-58, -74] as [number, number],
+  },
+] as const;
 const CRIMEA_FEATURE = {
   rsmKey: "crimea-highlight",
   type: "Feature",
@@ -108,6 +134,50 @@ const isEuropeCorridor = (center: [number, number]) => {
   const [lng, lat] = center;
   return lat >= 44 && lat <= 56 && lng >= 5 && lng <= 33;
 };
+
+function renderMapPhoto({
+  stageId,
+  href,
+  width,
+  height,
+  radius,
+}: {
+  stageId: string;
+  href: string;
+  width: number;
+  height: number;
+  radius: number;
+}) {
+  const clipId = `map-focus-photo-${stageId}`;
+
+  return (
+    <>
+      <defs>
+        <clipPath id={clipId}>
+          <rect x="0" y="0" width={width} height={height} rx={radius} />
+        </clipPath>
+      </defs>
+      <rect
+        x="-1"
+        y="-1"
+        width={width + 2}
+        height={height + 2}
+        rx={Math.max(radius - 1, 2)}
+        fill="rgba(255, 255, 255, 0.92)"
+        opacity="0.18"
+      />
+      <image
+        href={href}
+        x="0"
+        y="0"
+        width={width}
+        height={height}
+        preserveAspectRatio="xMidYMid slice"
+        clipPath={`url(#${clipId})`}
+      />
+    </>
+  );
+}
 
 export default function JourneyVisual({
   stage,
@@ -437,51 +507,22 @@ export default function JourneyVisual({
                   pressed: { outline: "none" },
                 }}
               />
-              {stage.mapImage ? (
-                <Marker coordinates={[76, -8]}>
-                  <g transform="translate(-34, -46)" className="map-focus-photo">
-                    <defs>
-                      <clipPath id={`map-focus-photo-${stage.id}`}>
-                        <rect x="0" y="0" width="68" height="92" rx="6" />
-                      </clipPath>
-                      <radialGradient id={`map-focus-photo-fade-${stage.id}`} cx="50%" cy="50%" r="72%">
-                        <stop offset="0%" stopColor="white" stopOpacity="1" />
-                        <stop offset="68%" stopColor="white" stopOpacity="0.94" />
-                        <stop offset="100%" stopColor="white" stopOpacity="0" />
-                      </radialGradient>
-                      <mask id={`map-focus-photo-mask-${stage.id}`}>
-                        <rect
-                          x="0"
-                          y="0"
-                          width="68"
-                          height="92"
-                          rx="6"
-                          fill={`url(#map-focus-photo-fade-${stage.id})`}
-                        />
-                      </mask>
-                    </defs>
-                    <ellipse
-                      cx="34"
-                      cy="46"
-                      rx="30"
-                      ry="40"
-                      fill="rgba(19, 63, 108, 0.14)"
-                      filter="blur(7px)"
-                    />
-                    <image
-                      href={mapAssetSrc(assetBasePath, stage.mapImage)}
-                      x="0"
-                      y="0"
-                      width="68"
-                      height="92"
-                      preserveAspectRatio="xMidYMid slice"
-                      clipPath={`url(#map-focus-photo-${stage.id})`}
-                      mask={`url(#map-focus-photo-mask-${stage.id})`}
-                      opacity="0.98"
-                    />
+              {IRVG_PROJECT_PREVIEWS.map((preview) => (
+                <Marker key={preview.id} coordinates={preview.coordinates}>
+                  <g
+                    transform={`translate(${preview.translate[0]}, ${preview.translate[1]})`}
+                    className="map-focus-photo"
+                  >
+                    {renderMapPhoto({
+                      stageId: preview.id,
+                      href: mapAssetSrc(assetBasePath, preview.image),
+                      width: preview.width,
+                      height: preview.height,
+                      radius: 6,
+                    })}
                   </g>
                 </Marker>
-              ) : null}
+              ))}
             </>
           )}
 
@@ -527,51 +568,13 @@ export default function JourneyVisual({
                     }
                     className="map-focus-photo"
                   >
-                    <defs>
-                      <clipPath id={`map-focus-photo-${stage.id}`}>
-                        <rect
-                          x="0"
-                          y="0"
-                          width={isPortraitFocusPhoto ? 31 : 40}
-                          height={isPortraitFocusPhoto ? 44 : 31}
-                          rx={isPortraitFocusPhoto ? 5 : 6}
-                        />
-                      </clipPath>
-                      <radialGradient id={`map-focus-photo-fade-${stage.id}`} cx="50%" cy="50%" r="72%">
-                        <stop offset="0%" stopColor="white" stopOpacity="1" />
-                        <stop offset="68%" stopColor="white" stopOpacity="0.92" />
-                        <stop offset="100%" stopColor="white" stopOpacity="0" />
-                      </radialGradient>
-                      <mask id={`map-focus-photo-mask-${stage.id}`}>
-                        <rect
-                          x="0"
-                          y="0"
-                          width={isPortraitFocusPhoto ? 31 : 40}
-                          height={isPortraitFocusPhoto ? 44 : 31}
-                          rx={isPortraitFocusPhoto ? 5 : 6}
-                          fill={`url(#map-focus-photo-fade-${stage.id})`}
-                        />
-                      </mask>
-                    </defs>
-                    <ellipse
-                      cx={isPortraitFocusPhoto ? 15.5 : 20}
-                      cy={isPortraitFocusPhoto ? 22 : 15.5}
-                      rx={isPortraitFocusPhoto ? 14 : 18}
-                      ry={isPortraitFocusPhoto ? 20 : 14}
-                      fill="rgba(19, 63, 108, 0.16)"
-                      filter="blur(4px)"
-                    />
-                    <image
-                      href={mapAssetSrc(assetBasePath, stage.mapImage)}
-                      x="0"
-                      y="0"
-                      width={isPortraitFocusPhoto ? 31 : 40}
-                      height={isPortraitFocusPhoto ? 44 : 31}
-                      preserveAspectRatio="xMidYMid slice"
-                      clipPath={`url(#map-focus-photo-${stage.id})`}
-                      mask={`url(#map-focus-photo-mask-${stage.id})`}
-                      opacity="0.96"
-                    />
+                    {renderMapPhoto({
+                      stageId: stage.id,
+                      href: mapAssetSrc(assetBasePath, stage.mapImage),
+                      width: isPortraitFocusPhoto ? 31 : 40,
+                      height: isPortraitFocusPhoto ? 44 : 31,
+                      radius: isPortraitFocusPhoto ? 5 : 6,
+                    })}
                   </g>
                 ) : null}
                 <circle r={4.2} fill="#fff" stroke="#1a1a1a" strokeWidth={1.4} />
