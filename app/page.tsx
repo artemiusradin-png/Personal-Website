@@ -230,7 +230,7 @@ const stages: JourneyStage[] = [
       "Joined Institute of Economic Strategy (Ukraine)",
       "Asia-Pacific finance and markets exposure",
     ],
-    mapImage: "IMG_0325.jpg",
+    mapImage: "IMG_0325.HEIC.png",
   },
   {
     id: "2026-2027-research",
