@@ -59,32 +59,6 @@ const IRVG_HIGHLIGHT_COUNTRIES = new Set([
   "South Africa",
   "United Kingdom",
 ]);
-const IRVG_PROJECT_PREVIEWS = [
-  {
-    id: "irvg-ukraine",
-    coordinates: [31, 49] as [number, number],
-    image: "irvg-ukraine-page.png",
-    width: 52,
-    height: 72,
-    translate: [-26, -82] as [number, number],
-  },
-  {
-    id: "irvg-israel",
-    coordinates: [35.1, 31.2] as [number, number],
-    image: "irvg-israel-page.png",
-    width: 50,
-    height: 68,
-    translate: [10, -72] as [number, number],
-  },
-  {
-    id: "irvg-germany",
-    coordinates: [10.5, 51.1] as [number, number],
-    image: "irvg-germany-page.png",
-    width: 50,
-    height: 68,
-    translate: [-58, -74] as [number, number],
-  },
-] as const;
 const CRIMEA_FEATURE = {
   rsmKey: "crimea-highlight",
   type: "Feature",
@@ -92,24 +66,37 @@ const CRIMEA_FEATURE = {
   geometry: {
     type: "Polygon",
     coordinates: [[
-      [32.52, 45.2],
-      [33.02, 45.11],
-      [33.62, 45.15],
-      [34.18, 45.22],
-      [34.78, 45.34],
-      [35.36, 45.5],
-      [35.92, 45.72],
-      [36.34, 45.94],
-      [36.58, 46.13],
-      [36.41, 46.34],
-      [36.02, 46.55],
-      [35.47, 46.72],
-      [34.85, 46.77],
-      [34.17, 46.74],
-      [33.56, 46.61],
-      [33.02, 46.4],
-      [32.66, 46.12],
-      [32.52, 45.2],
+      // Perekop isthmus (NW)
+      [32.68, 46.05],
+      [33.1, 46.15],
+      [33.65, 46.1],
+      // Sivash coast east
+      [34.2, 46.02],
+      [34.8, 45.9],
+      [35.3, 45.78],
+      // Arabat spit / NE coast
+      [35.6, 45.62],
+      [36.2, 45.5],
+      [36.55, 45.35],
+      // Kerch peninsula
+      [36.65, 45.1],
+      [36.5, 44.85],
+      // SE coast
+      [36.1, 44.7],
+      [35.5, 44.55],
+      [34.9, 44.42],
+      // Cape Sarych (southernmost ~44.38°N)
+      [33.73, 44.38],
+      // SW coast
+      [33.4, 44.45],
+      [33.0, 44.6],
+      [32.75, 44.78],
+      // Cape Tarkhankut (W, ~45.35°N)
+      [32.49, 45.35],
+      [32.55, 45.7],
+      [32.62, 45.9],
+      // Close back to Perekop
+      [32.68, 46.05],
     ]],
   },
 } as const;
@@ -221,6 +208,35 @@ export default function JourneyVisual({
     () => allStages.findIndex((item) => item.id === stage.id),
     [allStages, stage.id],
   );
+  const irvgProjectPreviews = useMemo(
+    () => [
+      {
+        id: "irvg-ukraine",
+        coordinates: [31, 49] as [number, number],
+        image: "irvg-ukraine-page.png",
+        width: isDesktop ? 52 : 38,
+        height: isDesktop ? 72 : 52,
+        translate: (isDesktop ? [-26, -82] : [-14, -58]) as [number, number],
+      },
+      {
+        id: "irvg-israel",
+        coordinates: [35.1, 31.2] as [number, number],
+        image: "irvg-israel-page.png",
+        width: isDesktop ? 50 : 36,
+        height: isDesktop ? 68 : 50,
+        translate: (isDesktop ? [-12, -72] : [-20, -52]) as [number, number],
+      },
+      {
+        id: "irvg-germany",
+        coordinates: [10.5, 51.1] as [number, number],
+        image: "irvg-germany-page.png",
+        width: isDesktop ? 50 : 36,
+        height: isDesktop ? 68 : 50,
+        translate: (isDesktop ? [-58, -74] : [-36, -54]) as [number, number],
+      },
+    ],
+    [isDesktop],
+  );
 
   const locationZoomOffset =
     stage.city === "Vancouver"
@@ -237,6 +253,28 @@ export default function JourneyVisual({
     : isIrvgStage
       ? 1.02
       : clamp(stage.zoom - 4 - locationZoomOffset - desktopCanadaZoomOffset, 1.8, 4);
+  const focusPhotoWidth = isPortraitFocusPhoto
+    ? isDesktop
+      ? 31
+      : 24
+    : isDesktop
+      ? 40
+      : 30;
+  const focusPhotoHeight = isPortraitFocusPhoto
+    ? isDesktop
+      ? 44
+      : 34
+    : isDesktop
+      ? 31
+      : 23;
+  const focusPhotoRadius = isPortraitFocusPhoto ? (isDesktop ? 5 : 4) : isDesktop ? 6 : 4;
+  const focusPhotoTranslate = isPortraitFocusPhoto
+    ? isDesktop
+      ? "translate(10, -58)"
+      : "translate(8, -44)"
+    : isDesktop
+      ? "translate(10, -48)"
+      : "translate(8, -34)";
   const desktopCanadaLngShift =
     isDesktop && !isWorldStage && !isIrvgStage
       ? stage.city === "Vancouver"
@@ -507,7 +545,7 @@ export default function JourneyVisual({
                   pressed: { outline: "none" },
                 }}
               />
-              {IRVG_PROJECT_PREVIEWS.map((preview) => (
+              {irvgProjectPreviews.map((preview) => (
                 <Marker key={preview.id} coordinates={preview.coordinates}>
                   <g
                     transform={`translate(${preview.translate[0]}, ${preview.translate[1]})`}
@@ -563,17 +601,15 @@ export default function JourneyVisual({
               <g className="focus-marker">
                 {stage.mapImage ? (
                   <g
-                    transform={
-                      isPortraitFocusPhoto ? "translate(10, -58)" : "translate(10, -48)"
-                    }
+                    transform={focusPhotoTranslate}
                     className="map-focus-photo"
                   >
                     {renderMapPhoto({
                       stageId: stage.id,
                       href: mapAssetSrc(assetBasePath, stage.mapImage),
-                      width: isPortraitFocusPhoto ? 31 : 40,
-                      height: isPortraitFocusPhoto ? 44 : 31,
-                      radius: isPortraitFocusPhoto ? 5 : 6,
+                      width: focusPhotoWidth,
+                      height: focusPhotoHeight,
+                      radius: focusPhotoRadius,
                     })}
                   </g>
                 ) : null}
