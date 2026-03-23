@@ -54,6 +54,29 @@ const IRVG_HIGHLIGHT_COUNTRIES = new Set([
   "Indonesia",
   "United Kingdom",
 ]);
+const CRIMEA_FEATURE = {
+  type: "Feature",
+  properties: { name: "Crimea" },
+  geometry: {
+    type: "Polygon",
+    coordinates: [[
+      [32.48, 45.23],
+      [33.35, 45.16],
+      [34.1, 45.26],
+      [35.15, 45.48],
+      [36.02, 45.76],
+      [36.46, 45.97],
+      [36.34, 46.28],
+      [35.93, 46.58],
+      [35.26, 46.79],
+      [34.45, 46.76],
+      [33.73, 46.54],
+      [33.18, 46.25],
+      [32.76, 45.89],
+      [32.48, 45.23],
+    ]],
+  },
+} as const;
 
 const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
@@ -128,7 +151,7 @@ export default function JourneyVisual({
   const targetZoom = isWorldStage
     ? 1.05
     : isIrvgStage
-      ? 1.55
+      ? 1.28
       : clamp(stage.zoom - 4 - locationZoomOffset - desktopCanadaZoomOffset, 1.8, 4);
   const desktopCanadaLngShift =
     isDesktop && !isWorldStage && !isIrvgStage
@@ -147,7 +170,7 @@ export default function JourneyVisual({
       isWorldStage
         ? ([0, 15] as [number, number])
         : isIrvgStage
-          ? ([18, 24] as [number, number])
+          ? ([12, 22] as [number, number])
           : ([stage.lng + desktopCanadaLngShift, stage.lat] as [number, number]),
     [desktopCanadaLngShift, isIrvgStage, isWorldStage, stage.lng, stage.lat],
   );
@@ -387,6 +410,20 @@ export default function JourneyVisual({
             }
           </Geographies>
 
+          {isIrvgStage && (
+            <Geography
+              geography={CRIMEA_FEATURE}
+              fill="rgba(19, 63, 108, 0.78)"
+              stroke="rgba(255, 248, 238, 0.95)"
+              strokeWidth={1}
+              style={{
+                default: { outline: "none" },
+                hover: { outline: "none", fill: "rgba(197, 141, 77, 0.9)" },
+                pressed: { outline: "none" },
+              }}
+            />
+          )}
+
           {!isWorldStage && !isIrvgStage && (
             <Line
               coordinates={routeCoords}
@@ -421,56 +458,54 @@ export default function JourneyVisual({
             <Marker coordinates={stageCenter}>
               <g className="focus-marker">
                 {stage.mapImage ? (
-                  <g transform="translate(10, -42)" className="map-focus-photo">
+                  <g transform="translate(8, -40)" className="map-focus-photo">
                     <defs>
                       <clipPath id={`map-focus-photo-${stage.id}`}>
-                        <circle cx="16" cy="16" r="12.5" />
+                        <rect x="0" y="0" width="30" height="24" rx="8" />
                       </clipPath>
+                      <radialGradient id={`map-focus-photo-fade-${stage.id}`} cx="50%" cy="50%" r="72%">
+                        <stop offset="0%" stopColor="white" stopOpacity="1" />
+                        <stop offset="68%" stopColor="white" stopOpacity="0.92" />
+                        <stop offset="100%" stopColor="white" stopOpacity="0" />
+                      </radialGradient>
+                      <mask id={`map-focus-photo-mask-${stage.id}`}>
+                        <rect
+                          x="0"
+                          y="0"
+                          width="30"
+                          height="24"
+                          rx="8"
+                          fill={`url(#map-focus-photo-fade-${stage.id})`}
+                        />
+                      </mask>
                     </defs>
-                    <rect
-                      x="0"
-                      y="7"
-                      width="32"
-                      height="32"
-                      rx="12"
-                      fill="rgba(19, 63, 108, 0.16)"
-                      transform="rotate(-12 16 23)"
-                    />
                     <line
-                      x1="16"
-                      y1="28"
-                      x2="-2"
-                      y2="44"
-                      stroke="#133f6c"
-                      strokeWidth="1.7"
+                      x1="15"
+                      y1="20"
+                      x2="-1"
+                      y2="37"
+                      stroke="rgba(19, 63, 108, 0.42)"
+                      strokeWidth="1.2"
                       strokeLinecap="round"
                     />
-                    <rect
-                      x="3"
-                      y="3"
-                      width="26"
-                      height="26"
-                      rx="13"
-                      fill="#f4efe7"
-                      stroke="#133f6c"
-                      strokeWidth={1.4}
+                    <ellipse
+                      cx="15"
+                      cy="12"
+                      rx="14"
+                      ry="11"
+                      fill="rgba(19, 63, 108, 0.16)"
+                      filter="blur(4px)"
                     />
                     <image
                       href={mapAssetSrc(assetBasePath, stage.mapImage)}
-                      x="3.5"
-                      y="3.5"
-                      width="25"
-                      height="25"
+                      x="0"
+                      y="0"
+                      width="30"
+                      height="24"
                       preserveAspectRatio="xMidYMid slice"
                       clipPath={`url(#map-focus-photo-${stage.id})`}
-                    />
-                    <circle
-                      cx="16"
-                      cy="16"
-                      r="13.6"
-                      fill="none"
-                      stroke="#fff"
-                      strokeWidth="1.4"
+                      mask={`url(#map-focus-photo-mask-${stage.id})`}
+                      opacity="0.96"
                     />
                   </g>
                 ) : null}

@@ -173,12 +173,6 @@ body {
   display: none;
 }
 
-.about-photo-outline,
-.about-photo-slab,
-.about-photo-tag {
-  position: absolute;
-}
-
 .about-menu-heading {
   margin: 0;
   display: flex;
@@ -1321,11 +1315,8 @@ li {
   }
 
   .about-hero {
-    --about-photo-width: min(46vw, 42rem);
+    --about-photo-width: 65vw;
     overflow: hidden;
-    background:
-      radial-gradient(circle at 78% 24%, rgba(19, 63, 108, 0.1), transparent 26%),
-      linear-gradient(180deg, #f4f2ee 0%, #eef2f5 100%);
   }
 
   .about-menu-layout {
@@ -1335,89 +1326,36 @@ li {
   .about-photo-panel {
     display: block;
     position: absolute;
-    top: 8vh;
-    right: clamp(1.6rem, 4vw, 4rem);
-    bottom: 10vh;
+    top: 0;
+    right: 0;
+    bottom: 0;
     width: var(--about-photo-width);
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     z-index: 1;
   }
 
   .about-photo-panel::before {
     content: "";
     position: absolute;
-    inset: 10% 4% 14% 14%;
-    border-radius: 2.25rem;
-    background:
-      linear-gradient(135deg, rgba(19, 63, 108, 0.18), rgba(19, 63, 108, 0.03)),
-      #dfe7ef;
-    transform: rotate(5deg);
-    box-shadow: 0 30px 80px rgba(18, 31, 46, 0.12);
-  }
-
-  .about-photo-outline {
-    inset: 3% 12% 6% 4%;
-    border: 2px solid rgba(19, 63, 108, 0.35);
-    border-radius: 2.5rem 1rem 3rem 1rem;
-    transform: rotate(-7deg);
-  }
-
-  .about-photo-slab {
-    inset: 0 10% 0 8%;
-    border-radius: 2.75rem 0.9rem 3.25rem 1.1rem;
-    overflow: hidden;
-    background-image:
-      linear-gradient(180deg, rgba(12, 18, 26, 0.08), rgba(12, 18, 26, 0.22)),
-      var(--about-photo-url);
-    background-size: cover;
-    background-position: center;
-    box-shadow: 0 28px 70px rgba(17, 26, 38, 0.2);
-    transform: rotate(-3deg);
-  }
-
-  .about-photo-slab::before {
-    content: "";
-    position: absolute;
-    inset: 1.1rem;
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    border-radius: 2rem 0.55rem 2.4rem 0.7rem;
-  }
-
-  .about-photo-slab::after {
-    content: "";
-    position: absolute;
-    top: 7%;
-    bottom: 7%;
-    left: -0.9rem;
-    width: clamp(0.7rem, 1.2vw, 1rem);
-    border-radius: 999px;
-    background: linear-gradient(180deg, #12324f 0%, #c58d4d 100%);
-  }
-
-  .about-photo-tag {
-    right: 0;
-    bottom: 6%;
-    display: grid;
-    gap: 0.35rem;
-    padding: 0.9rem 1rem;
-    min-width: 9rem;
-    background: rgba(255, 248, 238, 0.92);
-    border: 1px solid rgba(197, 141, 77, 0.45);
-    border-radius: 1.1rem;
-    box-shadow: 0 16px 36px rgba(40, 28, 14, 0.14);
-    transform: rotate(4deg);
-    backdrop-filter: blur(10px);
-  }
-
-  .about-photo-tag span {
-    font-size: 0.74rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #4e4a43;
-    font-weight: 700;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: clamp(3.2rem, 8vw, 7.5rem);
+    background: linear-gradient(
+      90deg,
+      var(--bg) 0%,
+      rgba(245, 247, 250, 0.86) 38%,
+      rgba(245, 247, 250, 0.36) 72%,
+      rgba(245, 247, 250, 0) 100%
+    );
+    pointer-events: none;
   }
 
   .about-swipe-hint {
-    left: calc(100% - var(--about-photo-width) - 2rem);
+    left: calc((100% - var(--about-photo-width)) / 2);
   }
 
   .mobile-credentials-screen {

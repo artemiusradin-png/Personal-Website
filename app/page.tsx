@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 
 type JourneyStage = {
@@ -626,21 +626,9 @@ export default function Home() {
           </div>
           <div
             className="about-photo-panel"
-            style={
-              {
-                "--about-photo-url": `url("${aboutPhotoUrl}")`,
-              } as CSSProperties
-            }
+            style={{ backgroundImage: `url("${aboutPhotoUrl}")` }}
             aria-hidden="true"
-          >
-            <div className="about-photo-outline" />
-            <div className="about-photo-slab" />
-            <div className="about-photo-tag">
-              <span>UBC</span>
-              <span>Finance</span>
-              <span>Policy</span>
-            </div>
-          </div>
+          />
           <div className="landing-swipe-hint about-swipe-hint" aria-hidden="true">
             <span>Scroll Down</span>
             <div className="swipe-chevrons">
