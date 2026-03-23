@@ -59,11 +59,12 @@ const IRVG_HIGHLIGHT_COUNTRIES = new Set([
   "South Africa",
   "United Kingdom",
 ]);
-const CRIMEA_FEATURE = {
-  rsmKey: "crimea-highlight",
-  type: "Feature",
-  properties: { name: "Crimea" },
-  geometry: {
+const CRIMEA_GEOJSON = {
+  type: "FeatureCollection",
+  features: [{
+    type: "Feature",
+    properties: { name: "Crimea" },
+    geometry: {
     type: "Polygon",
     coordinates: [[
       // Perekop isthmus (NW)
@@ -98,7 +99,8 @@ const CRIMEA_FEATURE = {
       // Close back to Perekop
       [32.68, 46.05],
     ]],
-  },
+    },
+  }],
 } as const;
 
 const clamp = (value: number, min: number, max: number) =>
@@ -212,27 +214,27 @@ export default function JourneyVisual({
     () => [
       {
         id: "irvg-ukraine",
-        coordinates: [31, 49] as [number, number],
+        coordinates: (isDesktop ? [31, 49] : [67, 41]) as [number, number],
         image: "irvg-ukraine-page.png",
-        width: isDesktop ? 52 : 38,
-        height: isDesktop ? 72 : 52,
-        translate: (isDesktop ? [-26, -82] : [-14, -58]) as [number, number],
+        width: isDesktop ? 52 : 24,
+        height: isDesktop ? 72 : 34,
+        translate: (isDesktop ? [-26, -82] : [-42, -42]) as [number, number],
       },
       {
         id: "irvg-israel",
-        coordinates: [35.1, 31.2] as [number, number],
+        coordinates: (isDesktop ? [35.1, 31.2] : [67, 41]) as [number, number],
         image: "irvg-israel-page.png",
-        width: isDesktop ? 50 : 36,
-        height: isDesktop ? 68 : 50,
-        translate: (isDesktop ? [-12, -72] : [-20, -52]) as [number, number],
+        width: isDesktop ? 50 : 24,
+        height: isDesktop ? 68 : 34,
+        translate: (isDesktop ? [-12, -72] : [-14, -42]) as [number, number],
       },
       {
         id: "irvg-germany",
-        coordinates: [10.5, 51.1] as [number, number],
+        coordinates: (isDesktop ? [10.5, 51.1] : [67, 41]) as [number, number],
         image: "irvg-germany-page.png",
-        width: isDesktop ? 50 : 36,
-        height: isDesktop ? 68 : 50,
-        translate: (isDesktop ? [-58, -74] : [-36, -54]) as [number, number],
+        width: isDesktop ? 50 : 24,
+        height: isDesktop ? 68 : 34,
+        translate: (isDesktop ? [-58, -74] : [14, -42]) as [number, number],
       },
     ],
     [isDesktop],
@@ -256,25 +258,25 @@ export default function JourneyVisual({
   const focusPhotoWidth = isPortraitFocusPhoto
     ? isDesktop
       ? 31
-      : 24
+      : 28
     : isDesktop
       ? 40
-      : 30;
+      : 34;
   const focusPhotoHeight = isPortraitFocusPhoto
     ? isDesktop
       ? 44
-      : 34
+      : 40
     : isDesktop
       ? 31
-      : 23;
+      : 26;
   const focusPhotoRadius = isPortraitFocusPhoto ? (isDesktop ? 5 : 4) : isDesktop ? 6 : 4;
   const focusPhotoTranslate = isPortraitFocusPhoto
     ? isDesktop
       ? "translate(10, -58)"
-      : "translate(8, -44)"
+      : "translate(16, -48)"
     : isDesktop
       ? "translate(10, -48)"
-      : "translate(8, -34)";
+      : "translate(16, -36)";
   const desktopCanadaLngShift =
     isDesktop && !isWorldStage && !isIrvgStage
       ? stage.city === "Vancouver"
@@ -534,17 +536,24 @@ export default function JourneyVisual({
 
           {isIrvgStage && (
             <>
-              <Geography
-                geography={CRIMEA_FEATURE}
-                fill="rgba(19, 63, 108, 0.78)"
-                stroke="rgba(255, 248, 238, 0.95)"
-                strokeWidth={1}
-                style={{
-                  default: { outline: "none" },
-                  hover: { outline: "none", fill: "rgba(197, 141, 77, 0.9)" },
-                  pressed: { outline: "none" },
-                }}
-              />
+              <Geographies geography={CRIMEA_GEOJSON}>
+                {({ geographies }) =>
+                  geographies.map((geo) => (
+                    <Geography
+                      key={geo.rsmKey}
+                      geography={geo}
+                      fill="rgba(19, 63, 108, 0.78)"
+                      stroke="rgba(255, 248, 238, 0.95)"
+                      strokeWidth={1}
+                      style={{
+                        default: { outline: "none" },
+                        hover: { outline: "none", fill: "rgba(197, 141, 77, 0.9)" },
+                        pressed: { outline: "none" },
+                      }}
+                    />
+                  ))
+                }
+              </Geographies>
               {irvgProjectPreviews.map((preview) => (
                 <Marker key={preview.id} coordinates={preview.coordinates}>
                   <g
