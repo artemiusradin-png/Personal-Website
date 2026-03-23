@@ -348,7 +348,9 @@ export default function JourneyVisual({
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
               geographies.map((geo) => {
-                const countryName = geo.properties.name as string | undefined;
+                const countryName = (
+                  geo.properties as { name?: string } | undefined
+                )?.name;
                 const isIrvgHighlight =
                   isIrvgStage &&
                   countryName != null &&
