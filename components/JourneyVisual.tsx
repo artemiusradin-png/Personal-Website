@@ -214,27 +214,29 @@ export default function JourneyVisual({
     () => [
       {
         id: "irvg-ukraine",
-        coordinates: (isDesktop ? [31, 49] : [67, 41]) as [number, number],
+        coordinates: (isDesktop ? [31, 49] : [28, 39]) as [number, number],
         image: "irvg-ukraine-page.png",
+        // On mobile the map background is heavily clipped (`overflow: hidden`),
+        // so keep thumbnails closer to the pin and slightly smaller.
         width: isDesktop ? 52 : 24,
         height: isDesktop ? 72 : 34,
-        translate: (isDesktop ? [-26, -82] : [-42, -42]) as [number, number],
+        translate: (isDesktop ? [-26, -82] : [-34, -26]) as [number, number],
       },
       {
         id: "irvg-israel",
-        coordinates: (isDesktop ? [35.1, 31.2] : [67, 41]) as [number, number],
+        coordinates: (isDesktop ? [35.1, 31.2] : [28, 39]) as [number, number],
         image: "irvg-israel-page.png",
         width: isDesktop ? 50 : 24,
         height: isDesktop ? 68 : 34,
-        translate: (isDesktop ? [-12, -72] : [-14, -42]) as [number, number],
+        translate: (isDesktop ? [-12, -72] : [-12, -26]) as [number, number],
       },
       {
         id: "irvg-germany",
-        coordinates: (isDesktop ? [10.5, 51.1] : [67, 41]) as [number, number],
+        coordinates: (isDesktop ? [10.5, 51.1] : [28, 39]) as [number, number],
         image: "irvg-germany-page.png",
         width: isDesktop ? 50 : 24,
         height: isDesktop ? 68 : 34,
-        translate: (isDesktop ? [-58, -74] : [14, -42]) as [number, number],
+        translate: (isDesktop ? [-58, -74] : [12, -26]) as [number, number],
       },
     ],
     [isDesktop],
@@ -565,7 +567,7 @@ export default function JourneyVisual({
                       href: mapAssetSrc(assetBasePath, preview.image),
                       width: preview.width,
                       height: preview.height,
-                      radius: 6,
+                      radius: isDesktop ? 6 : 5,
                     })}
                   </g>
                 </Marker>
