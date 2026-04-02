@@ -88,7 +88,7 @@ const stages: JourneyStage[] = [
       "Built Excel models for budgeting and forecasting",
       "Exposure to German business culture and corporate finance",
     ],
-    mapImage: "IMG_8826.HEIC.png",
+    mapImage: "IMG_5579.jpg",
   },
   {
     id: "2023-vancouver",
@@ -276,8 +276,8 @@ type PageFlow = "landing" | "about" | "journey";
 
 export default function Home() {
   const basePath = process.env.NODE_ENV === "production" ? "/Personal-Website" : "";
-  const landingBackgroundUrl = `${basePath}/landing-bg.jpg`;
-  const aboutPhotoUrl = `${basePath}/IMG_0628.jpg`;
+  const landingBackgroundUrl = `${basePath}/landing-bg-optimized.jpg`;
+  const aboutPhotoUrl = `${basePath}/IMG_0628-optimized.jpg`;
   const [activeStageId, setActiveStageId] = useState(stages[0].id);
   const [pageFlow, setPageFlow] = useState<PageFlow>("landing");
   const [isLeavingLanding, setIsLeavingLanding] = useState(false);
@@ -325,6 +325,14 @@ export default function Home() {
     const id = window.requestAnimationFrame(() => setIsLandingReady(true));
     return () => window.cancelAnimationFrame(id);
   }, []);
+
+  useEffect(() => {
+    [landingBackgroundUrl, aboutPhotoUrl].forEach((src) => {
+      const image = new window.Image();
+      image.decoding = "async";
+      image.src = src;
+    });
+  }, [landingBackgroundUrl, aboutPhotoUrl]);
 
   useEffect(() => {
     if (pageFlow !== "about") return;
