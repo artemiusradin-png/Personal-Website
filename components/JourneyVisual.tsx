@@ -215,7 +215,7 @@ export default function JourneyVisual({
       {
         id: "irvg-ukraine",
         coordinates: (isDesktop ? [31, 49] : [28, 39]) as [number, number],
-        image: "irvg-ukraine-page.png",
+        image: "irvg-ukraine-step.jpg",
         // On mobile the map background is heavily clipped (`overflow: hidden`),
         // so keep thumbnails closer to the pin and slightly smaller.
         width: isDesktop ? 52 : 24,
@@ -225,7 +225,7 @@ export default function JourneyVisual({
       {
         id: "irvg-israel",
         coordinates: (isDesktop ? [35.1, 31.2] : [28, 39]) as [number, number],
-        image: "irvg-israel-page.png",
+        image: "irvg-israel-step.jpg",
         width: isDesktop ? 50 : 24,
         height: isDesktop ? 68 : 34,
         translate: (isDesktop ? [-12, -72] : [-12, -26]) as [number, number],
@@ -233,7 +233,7 @@ export default function JourneyVisual({
       {
         id: "irvg-germany",
         coordinates: (isDesktop ? [10.5, 51.1] : [28, 39]) as [number, number],
-        image: "irvg-germany-page.png",
+        image: "irvg-germany-step.jpg",
         width: isDesktop ? 50 : 24,
         height: isDesktop ? 68 : 34,
         translate: (isDesktop ? [-58, -74] : [12, -26]) as [number, number],
@@ -241,6 +241,19 @@ export default function JourneyVisual({
     ],
     [isDesktop],
   );
+
+  useEffect(() => {
+    const imageNames = [
+      ...allStages.map((item) => item.mapImage).filter((item): item is string => !!item),
+      ...irvgProjectPreviews.map((preview) => preview.image),
+    ];
+
+    Array.from(new Set(imageNames)).forEach((imageName) => {
+      const image = new window.Image();
+      image.decoding = "async";
+      image.src = mapAssetSrc(assetBasePath, imageName);
+    });
+  }, [allStages, assetBasePath, irvgProjectPreviews]);
 
   const locationZoomOffset =
     stage.city === "Vancouver"

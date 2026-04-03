@@ -88,7 +88,7 @@ const stages: JourneyStage[] = [
       "Built Excel models for budgeting and forecasting",
       "Exposure to German business culture and corporate finance",
     ],
-    mapImage: "IMG_5579.jpg",
+    mapImage: "IMG_5579-step.jpg",
   },
   {
     id: "2023-vancouver",
@@ -108,7 +108,7 @@ const stages: JourneyStage[] = [
       "Core courses in corporate finance, investments, and financial modeling",
       "Participation in case competitions and industry events",
     ],
-    mapImage: "IMG_8436.jpg",
+    mapImage: "IMG_8436-step.jpg",
   },
   {
     id: "2024-berlin",
@@ -128,7 +128,7 @@ const stages: JourneyStage[] = [
       "Policy analysis on economic and financial topics",
       "Exposure to legislative process and regulatory frameworks",
     ],
-    mapImage: "IMG_2803.jpg",
+    mapImage: "IMG_2803-step.jpg",
   },
   {
     id: "2024-irvg",
@@ -147,7 +147,7 @@ const stages: JourneyStage[] = [
       "Cross-border collaboration on post-conflict reconstruction and new-build programs",
       "Portfolio and narrative details published on the IRVG website",
     ],
-    mapImage: "sanare-haven-kharkiv-page.png",
+    mapImage: "sanare-haven-kharkiv-step.jpg",
     link: { href: "https://inter-vg.com/", label: "inter-vg.com" },
   },
   {
@@ -167,7 +167,7 @@ const stages: JourneyStage[] = [
       "Design and planning work toward a new school in the Middle East",
       "Further documentation, imagery, and storytelling at inter-vg.com",
     ],
-    mapImage: "sanare-haven-kharkiv-page.png",
+    mapImage: "sanare-haven-kharkiv-step.jpg",
     link: { href: "https://inter-vg.com/", label: "inter-vg.com" },
   },
   {
@@ -189,7 +189,7 @@ const stages: JourneyStage[] = [
       "Contributed to cross-border financing workflows and coordination",
       "Improved data checks and reporting processes for deal and portfolio monitoring",
     ],
-    mapImage: "IMG_8128-2.jpg",
+    mapImage: "IMG_8128-step.jpg",
   },
   {
     id: "2026-toronto",
@@ -210,7 +210,7 @@ const stages: JourneyStage[] = [
       "Presented recommendations under tight competition timelines",
       "Competed with students representing universities across Canada",
     ],
-    mapImage: "IMG_2804.jpg",
+    mapImage: "IMG_2804-step.jpg",
   },
   {
     id: "2026-hong-kong",
@@ -230,7 +230,7 @@ const stages: JourneyStage[] = [
       "Joined Institute of Economic Strategy (Ukraine)",
       "Asia-Pacific finance and markets exposure",
     ],
-    mapImage: "IMG_0325.HEIC.png",
+    mapImage: "IMG_0325-step.jpg",
   },
   {
     id: "2026-2027-research",
@@ -250,7 +250,7 @@ const stages: JourneyStage[] = [
       "Correlation and association methodology",
       "Scientific paper in progress",
     ],
-    mapImage: "hong-kong-research-screenshot.png",
+    mapImage: "hong-kong-research-step.jpg",
   },
   {
     id: "whats-next",
