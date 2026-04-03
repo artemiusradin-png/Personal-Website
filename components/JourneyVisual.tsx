@@ -157,6 +157,7 @@ function renderMapPhoto({
       />
       <image
         href={href}
+        xlinkHref={href}
         x="0"
         y="0"
         width={width}
